@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Post from "./pages/Post";
 import AllPosts from "./pages/AllPosts";
 import RootLayout from "./pages/Root";
 import HomePage from "./pages/HomePage";

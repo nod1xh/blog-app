@@ -3,9 +3,14 @@ import { NavLink } from "react-router-dom";
 export default function Navbar() {
   return (
     <header>
-      <nav className="flex justify-center bg-slate-100 border border-black p-5">
+      <nav className="flex justify-between bg-slate-100 border border-black p-5">
         <div>
-          <h1>BlogApp</h1>
+          <NavLink
+            className="text-2xl font-semibold border-none hover:bg-transparent"
+            to="/"
+          >
+            BlogApp
+          </NavLink>
         </div>
         <div>
           <ul className="flex">
