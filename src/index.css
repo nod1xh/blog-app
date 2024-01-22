@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a {
+  height: 100%;
+}
+
+a:hover {
+  background-color: antiquewhite;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
