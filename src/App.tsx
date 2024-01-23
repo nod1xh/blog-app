@@ -3,11 +3,14 @@ import AllPosts from "./pages/AllPosts";
 import RootLayout from "./pages/Root";
 import HomePage from "./pages/HomePage";
 import CreatePost from "./pages/CreatePost";
+import Login from "./pages/Login";
+import Post from "./pages/Post";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    id: "root",
     // errorElement:
     children: [
       {
@@ -16,6 +19,8 @@ const router = createBrowserRouter([
       },
       { path: "allposts", element: <AllPosts /> },
       { path: "createpost", element: <CreatePost /> },
+      { path: "login", element: <Login /> },
+      { path: "allposts/post/:postId", element: <Post /> },
     ],
   },
 ]);

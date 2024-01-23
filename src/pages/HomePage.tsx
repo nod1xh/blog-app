@@ -3,20 +3,25 @@ import data from "../utilities/data";
 
 export default function HomePage() {
   return (
-    <div className="flex items-center justify-between mt-20 ">
-      {data.map((data) => (
-        <div className="border-2 border-black p-5" key={data.id}>
-          <h1>{data.title}</h1>
-          <p>{data.content}</p>
-          <p>Author: {data.author}</p>
-          <p>Date: {data.date}</p>
-          <div className="flex items-center">
-            <button className="border-black border-2 p-2 rounded-xl mt-4">
-              <NavLink to="/post">View Post</NavLink>
-            </button>
+    <>
+      <div className="font-semibold text-2xl text-center mt-10">
+        <h1>Featured posts</h1>
+      </div>
+      <div className="flex justify-between items-center mt-10">
+        {data.map((data) => (
+          <div className="border-2 border-black p-2 mb-10 w-1/4" key={data.id}>
+            <div className="flex justify-center">
+              <img src={data.image} alt="img" className="h-72" />
+            </div>
+            <h1 className="font-medium">{data.title}</h1>
+            <p>Author: {data.author}</p>
+            <p>Date: {data.date}</p>
+            <div className="flex items-center mt-2">
+              <NavLink to={`/allposts/post/${data.id}`}>View Post</NavLink>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }

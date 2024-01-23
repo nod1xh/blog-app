@@ -15,8 +15,9 @@ export default function Navbar() {
         <div>
           <ul className="flex">
             <NavLink to="/allposts">All Posts</NavLink>
-            <NavLink to="/">Home</NavLink>
             <NavLink to="/createpost">Create Post</NavLink>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="login">Login</NavLink>
           </ul>
         </div>
       </nav>
