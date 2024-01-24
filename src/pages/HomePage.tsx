@@ -9,15 +9,23 @@ export default function HomePage() {
       </div>
       <div className="flex justify-between items-center mt-10">
         {data.map((data) => (
-          <div className="border-2 border-black p-2 mb-10 w-1/4" key={data.id}>
+          <div
+            className="border-2 border-[#f1f5f9] rounded-lg p-2 mb-10 w-1/4"
+            key={data.id}
+          >
             <div className="flex justify-center">
               <img src={data.image} alt="img" className="h-72" />
             </div>
             <h1 className="font-medium">{data.title}</h1>
             <p>Author: {data.author}</p>
             <p>Date: {data.date}</p>
-            <div className="flex items-center mt-2">
-              <NavLink to={`/allposts/post/${data.id}`}>View Post</NavLink>
+            <div className="flex items-center mt-2 ">
+              <NavLink
+                className="hover:bg-transparent"
+                to={`/allposts/post/${data.id}`}
+              >
+                View Post
+              </NavLink>
             </div>
           </div>
         ))}
