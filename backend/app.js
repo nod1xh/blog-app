@@ -1,11 +1,11 @@
 const express = require("express");
+const connectDB = require("./db");
+connectDB();
+
+const port = process.env.PORT || 5000;
 
 const app = express();
 
-const port = 3000;
-
-let server = app.listen(port, () => {
+app.listen(port, () => {
   console.log(`Listening on URL http://localhost:${port}`);
 });
-
-console.log(server);
