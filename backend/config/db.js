@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-
-const MONGO_URI =
-  "mongodb+srv://nod1x:elmedin123@cluster0.x4lukb8.mongodb.net/?retryWrites=true&w=majority";
+require("dotenv").config();
 
 const connectToDb = async () => {
-  const conn = await mongoose.connect(MONGO_URI);
+  const conn = await mongoose.connect(process.env.MONGO_URI, {
+    dbName: "BlogApp",
+  });
   console.log(`Mongo Connected: ${conn.connection.host}`);
 };
 
