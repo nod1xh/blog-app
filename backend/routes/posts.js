@@ -63,4 +63,36 @@ router.post("/", (req, res) => {
   res.json({ success: true, data: post });
 });
 
+// Edit the post
+router.put("/:id", (req, res) => {
+  const post = postsData.find((post) => post.id === +req.params.id);
+
+  if (!post) {
+    return res
+      .status(404)
+      .json({ success: false, error: "Resource not found" });
+  }
+
+  post.title = req.body.title || post.title;
+  post.content = req.body.content || post.content;
+
+  res.json({ success: true, data: post });
+});
+
+// Delete post
+router.delete("/:id", (req, res) => {
+  const post = postsData.find((post) => post.id === +req.params.id);
+
+  if (!post) {
+    return res
+      .status(404)
+      .json({ success: false, error: "Resource not found" });
+  }
+
+  const index = postsData.indexOf(post);
+  postsData.splice(index, 1);
+
+  res.json({ success: true, data: {} });
+});
+
 module.exports = router;
