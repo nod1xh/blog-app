@@ -19,7 +19,7 @@ export default function AllPosts() {
             <div className="flex items-center mt-2">
               <NavLink
                 className="hover:bg-transparent"
-                to={`/allposts/post/${data.id}`}
+                to={`/allposts/${data.id}`}
               >
                 View Post
               </NavLink>

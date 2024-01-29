@@ -22,7 +22,7 @@ export default function HomePage() {
             <div className="flex items-center mt-2 ">
               <NavLink
                 className="hover:bg-transparent"
-                to={`/allposts/post/${data.id}`}
+                to={`/allposts/${data.id}`}
               >
                 View Post
               </NavLink>

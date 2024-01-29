@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       { path: "allposts", element: <AllPosts /> },
       { path: "createpost", element: <CreatePost /> },
       { path: "login", element: <Login /> },
-      { path: "allposts/post/:postId", element: <Post /> },
+      { path: "allposts/:postId", element: <Post /> },
     ],
   },
 ]);
