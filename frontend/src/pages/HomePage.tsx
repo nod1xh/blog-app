@@ -1,28 +1,59 @@
 import { NavLink } from "react-router-dom";
-import data from "../utilities/data";
+// import data from "../utilities/data";
+import { useEffect, useState } from "react";
+
+interface PostData {
+  id: number;
+  title: string;
+  author: string;
+  image: {
+    src: string;
+  };
+  date: string;
+}
 
 export default function HomePage() {
+  const [featuredPosts, setFeaturedPosts] = useState<PostData[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("http://localhost:5000");
+        const resData = await response.json();
+        console.log(resData.data);
+        setFeaturedPosts(resData.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <>
       <div className="font-semibold text-2xl text-center mt-10">
         <h1>Featured posts</h1>
       </div>
       <div className="flex justify-between items-center mt-10">
-        {data.map((data) => (
+        {featuredPosts.map((featuredPost) => (
           <div
             className="border-2 border-[#f1f5f9] rounded-lg p-2 mb-10 w-1/4"
-            key={data.id}
+            key={featuredPost.id}
           >
             <div className="flex justify-center">
-              <img src={data.image} alt="img" className="h-72" />
+              <img
+                src={`http://localhost:5000/${featuredPost.image.src}`}
+                alt="img"
+                className="h-72"
+              />
             </div>
-            <h1 className="font-medium">{data.title}</h1>
-            <p>Author: {data.author}</p>
-            <p>Date: {data.date}</p>
+            <h1 className="font-medium">{featuredPost.title}</h1>
+            <p>Author: {featuredPost.author}</p>
+            <p>Date: {featuredPost.date}</p>
             <div className="flex items-center mt-2 ">
               <NavLink
                 className="hover:bg-transparent"
-                to={`/allposts/${data.id}`}
+                to={`/allposts/${featuredPost.id}`}
               >
                 View Post
               </NavLink>
