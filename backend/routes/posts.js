@@ -53,7 +53,7 @@ router.post("/", upload.single("image"), async (req, res) => {
 });
 
 // Edit the post
-router.put("/:id", async (req, res) => {
+router.put("/:id", upload.single("image"), async (req, res) => {
   try {
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.id,
@@ -62,6 +62,10 @@ router.put("/:id", async (req, res) => {
           title: req.body.title,
           content: req.body.content,
           author: req.body.author,
+          image: {
+            data: req.file.buffer,
+            contentType: req.file.mimetype,
+          },
         },
       },
       {
@@ -71,7 +75,10 @@ router.put("/:id", async (req, res) => {
     res.json({ success: true, data: updatedPost });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, error: "Something went wrong" });
+    res.status(500).json({
+      success: false,
+      error: "Something went wrong while updating the post",
+    });
   }
 });
 
