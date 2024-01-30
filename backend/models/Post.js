@@ -7,6 +7,10 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please add a title"],
     },
+    image: {
+      data: Buffer,
+      contentType: String,
+    },
     content: {
       type: String,
       required: [true, "Please add content"],

@@ -1,7 +1,8 @@
 const express = require("express");
 const connectDB = require("./config/db");
 connectDB();
-const Post = require("./models/Post");
+
+const data = require("./data/posts");
 
 const port = process.env.PORT || 5000;
 
@@ -12,7 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/", async (req, res) => {
-  res.json({ message: "Welcome to the Blog App" });
+  res.json({ message: data });
 });
 
 const postsRouter = require("./routes/posts");
