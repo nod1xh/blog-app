@@ -1,4 +1,3 @@
-import data from "../utilities/data";
 import { useParams } from "react-router-dom";
 
 type PostParams = {

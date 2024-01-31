@@ -1,36 +1,13 @@
 import { NavLink } from "react-router-dom";
-// import data from "../utilities/data";
-import { useEffect, useState } from "react";
-
-interface PostData {
-  id: number;
-  title: string;
-  author: string;
-  image: {
-    src: string;
-  };
-  date: string;
-}
+import { useContext } from "react";
+import { FeaturedPostsContext } from "../context/featuredposts-context";
 
 export default function HomePage() {
-  const [featuredPosts, setFeaturedPosts] = useState<PostData[]>([]);
+  const { featuredPosts } = useContext(FeaturedPostsContext);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch("http://localhost:5000");
-        const resData = await response.json();
-        console.log(resData.data);
-        setFeaturedPosts(resData.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-    fetchData();
-  }, []);
-
-  return (
+  return featuredPosts.length > 0 ? (
     <>
+      {" "}
       <div className="font-semibold text-2xl text-center mt-10">
         <h1>Featured posts</h1>
       </div>
@@ -62,5 +39,9 @@ export default function HomePage() {
         ))}
       </div>
     </>
+  ) : (
+    <div className="text-3xl flex justify-center mt-10">
+      <h1>Loading posts...</h1>
+    </div>
   );
 }

@@ -11,7 +11,7 @@ const data = [
     },
     content: "Content of blog post one..",
     author: "Dino Hodzic",
-    date: new Date(), // Zamijeniti sa funkcijom koja generise novi datum kada se doda post.
+    date: new Date().toISOString().slice(0, 10), // Zamijeniti sa funkcijom koja generise novi datum kada se doda post.
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const data = [
     },
     content: "Content of blog post two..",
     author: "Elmedin Hodzic",
-    date: new Date(), // Zamijeniti sa funkcijom koja generise novi datum kada se doda post.
+    date: new Date().toISOString().slice(0, 10), // Zamijeniti sa funkcijom koja generise novi datum kada se doda post.
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ const data = [
     },
     content: "Content of blog post three..",
     author: "John Doe",
-    date: new Date(), // Zamijeniti sa funkcijom koja generise novi datum kada se doda post.
+    date: new Date().toISOString().slice(0, 10), // Zamijeniti sa funkcijom koja generise novi datum kada se doda post.
   },
 ];
 
