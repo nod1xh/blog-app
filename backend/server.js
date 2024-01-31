@@ -21,12 +21,8 @@ app.use(
 // Exposing images folder for featured posts
 app.use(express.static("images"));
 
-app.get("/", async (req, res) => {
-  res.json({ data: data });
-});
-
 const postsRouter = require("./routes/posts");
-app.use("/allposts", postsRouter);
+app.use("/", postsRouter);
 
 app.listen(port, () => {
   console.log(`Listening on URL http://localhost:${port}`);

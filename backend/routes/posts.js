@@ -10,16 +10,37 @@ const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 
 // Get all posts
+router.get("/allposts", async (req, res) => {
+  try {
+    const post = await Post.find();
+    res.json({ success: true, data: post });
+  } catch (error) {
+    res.status(500).json({ success: false, error: "Something went wrong" });
+  }
+});
+
+// Get featured posts / homepage
 router.get("/", async (req, res) => {
   try {
     const post = await Post.find();
-    res.json({ success: true, data: post, featuredPosts });
+    res.json({ success: true, data: featuredPosts });
   } catch (error) {
     res.status(500).json({ success: false, error: "Something went wrong" });
   }
 });
 
 // Get post by ID
+router.get("/allposts/:id", async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    res.json({ success: true, data: post });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, error: "Something went wrong" });
+  }
+});
+
+// Get a featured post by ID
 router.get("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -31,7 +52,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Add a post
-router.post("/", upload.single("image"), async (req, res) => {
+router.post("/allposts", upload.single("image"), async (req, res) => {
   const post = new Post({
     title: req.body.title,
     content: req.body.content,

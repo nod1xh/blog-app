@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 type PostParams = {
@@ -7,16 +8,33 @@ type PostParams = {
 interface Post {
   id: number;
   title: string;
-  image: string;
+  image: {
+    src: string;
+  };
   content: string;
   author: string;
+  date: string;
 }
 
 export default function Post() {
   const { postId } = useParams<PostParams>();
-  const selectedPost = data.find(
-    (post: Post) => post.id === parseInt(postId!, 10)
-  );
+  const [selectedPost, setSelectedPost] = useState<Post>();
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/65ba56dfc4bf07814fa811af`
+        );
+        const resData = await response.json();
+        setSelectedPost(resData.data);
+        console.log(resData.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="mt-10 flex items-center justify-center">
@@ -25,9 +43,9 @@ export default function Post() {
         <p className="mb-5 mt-3 font-semibold underline text-left">
           by: {selectedPost?.author} on {selectedPost?.date}
         </p>
-        <div className=" h-1/4 ">
-          <img src={selectedPost?.image} alt="" />
-        </div>
+        {/* <div className=" h-1/4 ">
+          <img src={selectedPost?.image.src} alt="" />
+        </div> */}
         <div>
           <p className=" mt-5 leading-8">
             <span className="text-3xl">L</span>orem ipsum dolor sit, amet

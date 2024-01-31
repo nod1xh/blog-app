@@ -39,7 +39,6 @@ const FeaturedPostsContextProvider: React.FC<{ children: React.ReactNode }> = (
 
   const ctxValue = {
     featuredPosts,
-    setFeaturedPosts,
   };
 
   return (
