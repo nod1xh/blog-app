@@ -18,17 +18,15 @@ interface Post {
 
 export default function Post() {
   const { postId } = useParams<PostParams>();
+  const idPost = +postId!;
   const [selectedPost, setSelectedPost] = useState<Post>();
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(
-          `http://localhost:5000/65ba56dfc4bf07814fa811af`
-        );
+        const response = await fetch(`http://localhost:5000/${idPost}`);
         const resData = await response.json();
-        setSelectedPost(resData.data);
-        console.log(resData.data);
+        setSelectedPost(resData.data[0]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -43,9 +41,12 @@ export default function Post() {
         <p className="mb-5 mt-3 font-semibold underline text-left">
           by: {selectedPost?.author} on {selectedPost?.date}
         </p>
-        {/* <div className=" h-1/4 ">
-          <img src={selectedPost?.image.src} alt="" />
-        </div> */}
+        <div className=" h-1/4 ">
+          <img
+            src={`http://localhost:5000/${selectedPost?.image.src}`}
+            alt=""
+          />
+        </div>
         <div>
           <p className=" mt-5 leading-8">
             <span className="text-3xl">L</span>orem ipsum dolor sit, amet

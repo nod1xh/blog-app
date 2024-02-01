@@ -29,7 +29,6 @@ const FeaturedPostsContextProvider: React.FC<{ children: React.ReactNode }> = (
         const response = await fetch("http://localhost:5000");
         const resData = await response.json();
         setFeaturedPosts(resData.data);
-        console.log(resData.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

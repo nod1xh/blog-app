@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema(
   {
-    // id not needed since MongoDB generates the id
+    id: Number,
     title: {
       type: String,
       required: [true, "Please add a title"],

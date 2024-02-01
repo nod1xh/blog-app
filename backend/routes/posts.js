@@ -20,9 +20,8 @@ router.get("/allposts", async (req, res) => {
 });
 
 // Get featured posts / homepage
-router.get("/", async (req, res) => {
+router.get("/", (req, res) => {
   try {
-    const post = await Post.find();
     res.json({ success: true, data: featuredPosts });
   } catch (error) {
     res.status(500).json({ success: false, error: "Something went wrong" });
@@ -41,9 +40,11 @@ router.get("/allposts/:id", async (req, res) => {
 });
 
 // Get a featured post by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const post = featuredPosts.filter((featuredPost) => {
+      return featuredPost.id === +req.params.id;
+    });
     res.json({ success: true, data: post });
   } catch (error) {
     console.log(error);
@@ -73,8 +74,8 @@ router.post("/allposts", upload.single("image"), async (req, res) => {
   }
 });
 
-// Edit the post
-router.put("/:id", upload.single("image"), async (req, res) => {
+// Edit post
+router.put("allposts/:id", upload.single("image"), async (req, res) => {
   try {
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.id,
