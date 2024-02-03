@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 type PostParams = {
   postId: string;
@@ -24,9 +25,8 @@ export default function Post() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(`http://localhost:5000/${idPost}`);
-        const resData = await response.json();
-        setSelectedPost(resData.data[0]);
+        const response = await axios.get(`http://localhost:5000/${idPost}`);
+        setSelectedPost(response.data.data[0]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 export interface PostData {
   id: number;
@@ -26,9 +27,8 @@ const FeaturedPostsContextProvider: React.FC<{ children: React.ReactNode }> = (
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:5000");
-        const resData = await response.json();
-        setFeaturedPosts(resData.data);
+        const response = await axios.get("http://localhost:5000");
+        setFeaturedPosts(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
