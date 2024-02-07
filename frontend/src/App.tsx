@@ -4,7 +4,8 @@ import RootLayout from "./pages/Root";
 import HomePage from "./pages/HomePage";
 import CreatePost from "./pages/CreatePost";
 import Login from "./pages/Login";
-import Post from "./pages/Post";
+import Post from "./pages/FeaturedPost";
+import UserPost from "./pages/UserCreatedPost";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
       { path: "allposts", element: <AllPosts /> },
       { path: "createpost", element: <CreatePost /> },
       { path: "login", element: <Login /> },
-      { path: "allposts/:postId", element: <Post /> },
+      { path: "/:postId", element: <Post /> },
+      { path: "allPosts/:postId", element: <UserPost /> },
     ],
   },
 ]);

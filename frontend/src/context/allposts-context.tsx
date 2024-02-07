@@ -2,11 +2,12 @@ import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
 export interface PostData {
-  id: number;
+  _id: string;
   title: string;
   author: string;
   image: {
     src: string;
+    contentType: string;
   };
   date: string;
 }

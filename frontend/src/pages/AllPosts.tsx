@@ -11,25 +11,25 @@ export default function AllPosts() {
         <h1>All posts</h1>
       </div>
       <div className="flex justify-between items-center mt-10">
-        {allPosts.map((allPosts) => (
+        {allPosts.map((post) => (
           <div
             className="border-2 border-[#f1f5f9] rounded-lg p-2 mb-10 w-1/4"
-            key={allPosts.id}
+            key={post._id}
           >
             <div className="flex justify-center">
               <img
-                src={`http://localhost:5000/${allPosts.image}`}
+                src={`http://localhost:5000/${post.image.src}`}
                 alt="img"
                 className="h-72"
               />
             </div>
-            <h1 className="font-medium">{allPosts.title}</h1>
-            <p>Author: {allPosts.author}</p>
-            <p>Date: {allPosts.date}</p>
+            <h1 className="font-medium">{post.title}</h1>
+            <p>Author: {post.author}</p>
+            <p>Date: {post.date}</p>
             <div className="flex items-center mt-2 ">
               <NavLink
                 className="hover:bg-transparent"
-                to={`/allposts/${allPosts.id}`}
+                to={`/allposts/${post._id}`}
               >
                 View Post
               </NavLink>

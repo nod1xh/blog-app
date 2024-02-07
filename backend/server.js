@@ -20,6 +20,7 @@ app.use(
 
 // Exposing images folder for featured posts
 app.use(express.static("images"));
+app.use(express.static("uploads"));
 
 const postsRouter = require("./routes/posts");
 app.use("/", postsRouter);
