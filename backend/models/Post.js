@@ -19,10 +19,7 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please add an author"],
     },
-    date: {
-      type: Date,
-      default: new Date().toISOString().slice(0, 10),
-    },
+    date: String,
   },
 
   { collection: "posts" }

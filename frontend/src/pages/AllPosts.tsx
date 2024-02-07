@@ -40,7 +40,7 @@ export default function AllPosts() {
     </>
   ) : (
     <div className="text-3xl flex justify-center mt-10">
-      <h1>Loading posts...</h1>
+      <h1>No posts to show</h1>
     </div>
   );
 }

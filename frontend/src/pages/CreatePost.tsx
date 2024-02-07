@@ -54,7 +54,7 @@ export default function CreatePost() {
   return (
     <div className="flex flex-col items-center w-full">
       <form
-        action=""
+        action="submit"
         method="post"
         encType="multipart/form-data"
         onSubmit={handleSubmit}

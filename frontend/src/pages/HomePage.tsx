@@ -7,7 +7,7 @@ export default function HomePage() {
 
   return featuredPosts.length > 0 ? (
     <>
-      <div className="font-semibold text-2xl text-center mt-10">
+      <div className="text-3xl text-center mt-10">
         <h1>Featured posts</h1>
       </div>
       <div className="flex justify-between items-center mt-10">
