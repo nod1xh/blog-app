@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { AllPostsContext } from "../context/allposts-context";
 
 type PostParams = {
   postId: string;
@@ -19,6 +20,8 @@ interface Post {
 
 export default function UserPost() {
   const { postId } = useParams<PostParams>();
+  const navigate = useNavigate();
+  const { setAllPosts } = useContext(AllPostsContext);
 
   const [selectedPost, setSelectedPost] = useState<Post>();
   const [isDeleted, setIsDeleted] = useState<Boolean>(false);
@@ -38,13 +41,13 @@ export default function UserPost() {
     fetchData();
   }, []);
 
-  async function deletePost() {
+  async function deletePost(id: string) {
     try {
       const response = await axios.delete(
         `http://localhost:5000/allPosts/${postId}`
       );
+      setAllPosts((prevPosts) => prevPosts.filter((post) => post._id !== id));
       setIsDeleted(true);
-      console.log(isDeleted);
       console.log(response.data, "Post successfully deleted");
     } catch (error) {
       console.error("Error deleting the post:", error);
@@ -52,12 +55,25 @@ export default function UserPost() {
   }
 
   function handleDelete() {
-    deletePost();
+    deletePost(postId!);
   }
+
+  function redirectToAllPosts() {
+    if (isDeleted) {
+      setTimeout(() => {
+        navigate("/allposts");
+        console.log("Go to All posts");
+      }, 2000);
+    }
+  }
+
+  useEffect(() => {
+    redirectToAllPosts();
+  }, [isDeleted]);
 
   return isDeleted ? (
     <h1 className="text-center font-semibold text-2xl mt-5">
-      Post has been deleted
+      Post has been deleted, redirecting to all posts.
     </h1>
   ) : (
     <div className="mt-10 flex items-center justify-center">

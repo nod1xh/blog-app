@@ -98,11 +98,6 @@ router.put("allposts/:id", upload.single("image"), async (req, res) => {
         $set: {
           title: req.body.title,
           content: req.body.content,
-          author: req.body.author,
-          image: {
-            data: req.file.buffer,
-            contentType: req.file.mimetype,
-          },
         },
       },
       {

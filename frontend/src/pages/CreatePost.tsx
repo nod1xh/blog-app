@@ -1,7 +1,11 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AllPostsContext } from "../context/allposts-context";
 
 export default function CreatePost() {
+  const { setAllPosts } = useContext(AllPostsContext);
+  const [postCreated, setPostCreated] = useState<Boolean>(false);
   const [formData, setFormData] = useState({
     title: "",
     image: null as File | null,
@@ -9,6 +13,7 @@ export default function CreatePost() {
     author: "",
     date: "",
   });
+  const navigate = useNavigate();
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -45,13 +50,35 @@ export default function CreatePost() {
         "http://localhost:5000/allposts",
         formDataToSend
       );
+      setAllPosts((prevPosts) => [...prevPosts, response.data.data]);
+      setPostCreated(true);
       console.log(response.data.data, "Post successfully created!");
     } catch (error) {
       console.error("There has been an error creating a post:", error);
     }
   }
 
-  return (
+  useEffect(() => {
+    if (postCreated) {
+      setTimeout(() => {
+        navigate("/allposts");
+        console.log("Go to All posts");
+      }, 2000);
+    }
+  }, [postCreated, navigate]);
+
+  return postCreated ? (
+    <>
+      <div className="flex items-center justify-center flex-col">
+        <h1 className="text-center text-2xl font-semibold mt-5">
+          Post successfully created!
+        </h1>
+        <h1 className="text-center text-2xl font-semibold mt-5">
+          Redirecting to All Posts!
+        </h1>
+      </div>
+    </>
+  ) : (
     <div className="flex flex-col items-center w-full">
       <form
         action="submit"
@@ -59,6 +86,7 @@ export default function CreatePost() {
         encType="multipart/form-data"
         onSubmit={handleSubmit}
         className="flex flex-col mt-10 w-2/4"
+        aria-required
       >
         <div>
           <label htmlFor="title">Title</label>
@@ -68,6 +96,7 @@ export default function CreatePost() {
             name="title"
             value={formData.title}
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -78,6 +107,7 @@ export default function CreatePost() {
             name="image"
             accept="image/*"
             onChange={handleImageChange}
+            required
           />
         </div>
         <div>
@@ -89,6 +119,7 @@ export default function CreatePost() {
             className="border-2 focus:outline-none w-full"
             value={formData.content}
             onChange={handleChange}
+            required
           ></textarea>
         </div>
         <div>
@@ -99,6 +130,7 @@ export default function CreatePost() {
             name="author"
             value={formData.author}
             onChange={handleChange}
+            required
           />
         </div>
         <div>
@@ -109,6 +141,7 @@ export default function CreatePost() {
             name="date"
             value={formData.date}
             onChange={handleChange}
+            required
           />
         </div>
         <button className="p-3 border-2 mt-4 rounded-md bg-slate-500 font-bold">

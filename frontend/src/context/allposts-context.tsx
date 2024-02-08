@@ -1,5 +1,11 @@
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 
 export interface PostData {
   _id: string;
@@ -14,10 +20,12 @@ export interface PostData {
 
 interface ctxType {
   allPosts: PostData[];
+  setAllPosts: Dispatch<SetStateAction<PostData[]>>;
 }
 
 export const AllPostsContext = createContext<ctxType>({
   allPosts: [],
+  setAllPosts: () => {},
 });
 
 const AllPostsContextProvider: React.FC<{ children: React.ReactNode }> = (
@@ -41,6 +49,7 @@ const AllPostsContextProvider: React.FC<{ children: React.ReactNode }> = (
 
   const ctxValue = {
     allPosts,
+    setAllPosts,
   };
 
   return (
