@@ -90,7 +90,7 @@ router.post("/allposts", upload.single("image"), async (req, res) => {
 });
 
 // Edit post
-router.put("allposts/:id", upload.single("image"), async (req, res) => {
+router.put("/allposts/:id", async (req, res) => {
   try {
     const updatedPost = await Post.findByIdAndUpdate(
       req.params.id,

@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema(
   {
-    id: Number,
     title: {
       type: String,
       required: [true, "Please add a title"],
