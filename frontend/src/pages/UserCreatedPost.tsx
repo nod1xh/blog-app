@@ -27,6 +27,24 @@ export default function UserPost() {
   const [selectedPost, setSelectedPost] = useState<Post>();
   const [isDeleted, setIsDeleted] = useState<Boolean>(false);
   const [isEditing, setIsEditing] = useState<Boolean>(false);
+  const [editedPost, setEditedPost] = useState<{
+    title: string;
+    content: string;
+  }>({
+    title: "",
+    content: "",
+  });
+
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const { name, value } = e.target;
+
+    setEditedPost({
+      ...editedPost,
+      [name]: value,
+    });
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -76,13 +94,18 @@ export default function UserPost() {
   async function editPost() {
     try {
       const response = await axios.put(
-        `http://localhost:5000/allposts/${postId}`
+        `http://localhost:5000/allposts/${postId}`,
+        editedPost
       );
-      setIsEditing(true);
+
       console.log(response.data.data);
     } catch (error) {
       console.error("Something went wrong while editing the post:", error);
     }
+  }
+
+  function openModal() {
+    setIsEditing((prevIsEditing) => !prevIsEditing);
   }
 
   return isDeleted ? (
@@ -110,12 +133,21 @@ export default function UserPost() {
           </div>
           <div className="border-2 border-slate-500 w-full"></div>
           <div className="flex justify-around w-full mt-3">
-            <button onClick={editPost}>Update Post</button>
+            <button onClick={openModal}>Update Post</button>
             <button onClick={handleDelete}>Delete Post</button>
           </div>
         </div>
       </div>
-      <div>{isEditing && <Modal></Modal>}</div>
+      <div>
+        {isEditing && (
+          <Modal
+            handleChange={handleChange}
+            editedPost={editedPost}
+            editPost={editPost}
+            closeModal={openModal}
+          ></Modal>
+        )}
+      </div>
     </>
   );
 }
