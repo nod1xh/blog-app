@@ -17,7 +17,7 @@ export default function Navbar() {
             <NavLink to="/allposts">All Posts</NavLink>
             <NavLink to="/">Home</NavLink>
             <NavLink to="/createpost">Create Post</NavLink>
-            <NavLink to="login">Login</NavLink>
+            <NavLink to="signup">Sign Up</NavLink>
           </ul>
         </div>
       </nav>

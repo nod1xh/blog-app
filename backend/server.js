@@ -22,6 +22,9 @@ app.use(
 app.use(express.static("images"));
 app.use(express.static("uploads"));
 
+const authRouter = require("./routes/auth");
+app.use("/", authRouter);
+
 const postsRouter = require("./routes/posts");
 app.use("/", postsRouter);
 

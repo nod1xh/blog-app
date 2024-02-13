@@ -3,7 +3,8 @@ import AllPosts from "./pages/AllPosts";
 import RootLayout from "./pages/Root";
 import HomePage from "./pages/HomePage";
 import CreatePost from "./pages/CreatePost";
-import Login from "./pages/Login";
+
+import SignUp from "./pages/SignUp";
 import Post from "./pages/FeaturedPost";
 import UserPost from "./pages/UserCreatedPost";
 
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
       },
       { path: "allposts", element: <AllPosts /> },
       { path: "createpost", element: <CreatePost /> },
-      { path: "login", element: <Login /> },
+      { path: "signup", element: <SignUp /> },
       { path: "/:postId", element: <Post /> },
       { path: "allPosts/:postId", element: <UserPost /> },
     ],

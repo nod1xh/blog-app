@@ -10,17 +10,14 @@ export default function AllPosts() {
       <div className="font-semibold text-2xl text-center mt-10">
         <h1>All posts</h1>
       </div>
-      <div className="flex justify-between items-center mt-10">
+      <div className="allposts-container">
         {allPosts.map((post) => (
-          <div
-            className="border-2 border-[#f1f5f9] rounded-lg p-2 mb-10 w-1/4"
-            key={post._id}
-          >
+          <div className="mb-10 p-4" key={post._id}>
             <div className="flex justify-center">
               <img
                 src={`http://localhost:5000/${post.image.src}`}
                 alt="img"
-                className="h-72"
+                className="h-72 w-full"
               />
             </div>
             <h1 className="font-medium">{post.title}</h1>
