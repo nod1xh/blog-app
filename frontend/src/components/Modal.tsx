@@ -8,6 +8,9 @@ const Modal: React.FC<{
   editPost: () => {};
   closeModal: () => void;
 }> = ({ handleChange, editedPost, editPost, closeModal }) => {
+  const styles =
+    "p-3 mt-10 rounded-md bg-slate-500 hover:bg-[#3498db] w-2/4 font-bold text-white";
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">
@@ -33,16 +36,10 @@ const Modal: React.FC<{
             required
           ></textarea>
           <div className="flex justify-center">
-            <button
-              onClick={editPost}
-              className="p-3 border-2 mt-10 rounded-md bg-slate-500 w-2/4 font-bold mr-10"
-            >
+            <button onClick={editPost} className={`${styles} mr-10`}>
               Update
             </button>
-            <button
-              onClick={closeModal}
-              className="p-3 border-2 mt-10 rounded-md bg-slate-500 w-2/4 font-bold"
-            >
+            <button onClick={closeModal} className={styles}>
               Cancel
             </button>
           </div>

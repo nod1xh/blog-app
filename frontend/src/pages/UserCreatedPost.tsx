@@ -133,8 +133,12 @@ export default function UserPost() {
           </div>
           <div className="border-2 border-slate-500 w-full"></div>
           <div className="flex justify-around w-full mt-3">
-            <button onClick={openModal}>Update Post</button>
-            <button onClick={handleDelete}>Delete Post</button>
+            <button className="btn-1" onClick={openModal}>
+              Update Post
+            </button>
+            <button className="btn-1" onClick={handleDelete}>
+              Delete Post
+            </button>
           </div>
         </div>
       </div>

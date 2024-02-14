@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PostsContext } from "../context/posts-context";
+import Redirect from "../components/Redirect";
 
 export default function CreatePost() {
   const { setAllPosts } = useContext(PostsContext);
@@ -63,21 +64,15 @@ export default function CreatePost() {
       setTimeout(() => {
         navigate("/allposts");
         console.log("Go to All posts");
-      }, 2000);
+      }, 5000);
     }
   }, [postCreated, navigate]);
 
   return postCreated ? (
-    <>
-      <div className="flex items-center justify-center flex-col">
-        <h1 className="text-center text-2xl font-semibold mt-5">
-          Post successfully created!
-        </h1>
-        <h1 className="text-center text-2xl font-semibold mt-5">
-          Redirecting to All Posts!
-        </h1>
-      </div>
-    </>
+    <Redirect
+      content="Congratulations on your new post! It's now live on the blog. 
+      We've redirected you to all posts to see your latest creation among others."
+    />
   ) : (
     <div className="flex flex-col items-center w-full">
       <form
@@ -144,7 +139,7 @@ export default function CreatePost() {
             required
           />
         </div>
-        <button className="p-3 border-2 mt-4 rounded-md bg-slate-500 font-bold">
+        <button className="p-3 mt-4 rounded-md bg-slate-500 hover:bg-[#3498db] text-white font-bold">
           Create Post
         </button>
       </form>

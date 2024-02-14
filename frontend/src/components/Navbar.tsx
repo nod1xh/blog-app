@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { PostsContext } from "../context/posts-context";
 
 export default function Navbar() {
+  const { isLogged } = useContext(PostsContext);
+
   return (
     <header>
       <nav className="flex justify-between bg-slate-100 border border-black p-5">
@@ -17,7 +21,11 @@ export default function Navbar() {
             <NavLink to="/allposts">All Posts</NavLink>
             <NavLink to="/">Home</NavLink>
             <NavLink to="/createpost">Create Post</NavLink>
-            <NavLink to="signup">Sign Up</NavLink>
+            {isLogged ? (
+              <button className="btn">Log out</button>
+            ) : (
+              <NavLink to="signup">Sign Up</NavLink>
+            )}
           </ul>
         </div>
       </nav>

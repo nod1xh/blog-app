@@ -41,9 +41,7 @@ export const PostsContext = createContext<ContextType>({
   setAllPosts: () => {},
   setUser: () => {},
   isLogged: false,
-  handleSubmit: async (e: React.FormEvent<HTMLFormElement>) => {
-    Promise<void>;
-  },
+  handleSubmit: async () => {},
 });
 
 const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
