@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { AllPostsContext } from "../context/allposts-context";
+import { PostsContext } from "../context/posts-context";
 import { NavLink } from "react-router-dom";
 
 export default function AllPosts() {
-  const { allPosts } = useContext(AllPostsContext);
+  const { allPosts } = useContext(PostsContext);
 
   return allPosts.length > 0 ? (
     <>

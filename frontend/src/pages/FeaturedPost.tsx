@@ -27,6 +27,7 @@ export default function Post() {
       try {
         const response = await axios.get(`http://localhost:5000/${idPost}`);
         setSelectedPost(response.data.data[0]);
+        console.log(response.data.data[0]);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

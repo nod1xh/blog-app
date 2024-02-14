@@ -57,7 +57,7 @@ router.get("/allposts/:id", async (req, res) => {
 router.get("/:id", (req, res) => {
   try {
     const post = featuredPosts.filter((featuredPost) => {
-      return featuredPost.id === +req.params.id;
+      return featuredPost._id === +req.params.id;
     });
     res.json({ success: true, data: post });
   } catch (error) {

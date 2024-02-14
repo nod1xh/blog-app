@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
-import { FeaturedPostsContext } from "../context/featuredposts-context";
+import { PostsContext } from "../context/posts-context";
 
 export default function HomePage() {
-  const { featuredPosts } = useContext(FeaturedPostsContext);
+  const { featuredPosts } = useContext(PostsContext);
 
   return featuredPosts.length > 0 ? (
     <>
@@ -14,7 +14,7 @@ export default function HomePage() {
         {featuredPosts.map((featuredPost) => (
           <div
             className="border-2 border-[#f1f5f9] rounded-lg p-2 mb-10 w-1/4"
-            key={featuredPost.id}
+            key={featuredPost._id}
           >
             <div className="flex justify-center">
               <img
@@ -29,7 +29,7 @@ export default function HomePage() {
             <div className="flex items-center mt-2 ">
               <NavLink
                 className="hover:bg-transparent"
-                to={`/${featuredPost.id}`}
+                to={`/${featuredPost._id}`}
               >
                 View Post
               </NavLink>

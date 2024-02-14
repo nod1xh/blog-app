@@ -1,34 +1,16 @@
-import axios from "axios";
-import { useState } from "react";
+import { useContext } from "react";
+import { PostsContext } from "../context/posts-context";
 
 export default function SignUp() {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const { user, setUser, handleSubmit } = useContext(PostsContext);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
 
-    setFormData({
-      ...formData,
+    setUser({
+      ...user,
       [name]: value,
     });
-  }
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/signup",
-        formData
-      );
-      console.log(response.data.message);
-    } catch (error) {
-      console.error("Error signing up", error);
-    }
   }
 
   return (
@@ -49,7 +31,7 @@ export default function SignUp() {
             type="text"
             id="username"
             name="username"
-            value={formData.username}
+            value={user.username}
             onChange={handleChange}
             required
           />
@@ -58,7 +40,7 @@ export default function SignUp() {
             type="email"
             id="email"
             name="email"
-            value={formData.email}
+            value={user.email}
             onChange={handleChange}
           />
           <label htmlFor="password">Password</label>
@@ -66,7 +48,7 @@ export default function SignUp() {
             type="password"
             id="password"
             name="password"
-            value={formData.password}
+            value={user.password}
             onChange={handleChange}
           />
           <div className="flex justify-center">

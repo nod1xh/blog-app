@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { AllPostsContext } from "../context/allposts-context";
+import { PostsContext } from "../context/posts-context";
 import Modal from "../components/Modal";
 
 type PostParams = {
@@ -22,7 +22,7 @@ interface Post {
 export default function UserPost() {
   const { postId } = useParams<PostParams>();
   const navigate = useNavigate();
-  const { setAllPosts } = useContext(AllPostsContext);
+  const { setAllPosts } = useContext(PostsContext);
 
   const [selectedPost, setSelectedPost] = useState<Post>();
   const [isDeleted, setIsDeleted] = useState<Boolean>(false);

@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AllPostsContext } from "../context/allposts-context";
+import { PostsContext } from "../context/posts-context";
 
 export default function CreatePost() {
-  const { setAllPosts } = useContext(AllPostsContext);
+  const { setAllPosts } = useContext(PostsContext);
   const [postCreated, setPostCreated] = useState<Boolean>(false);
   const [formData, setFormData] = useState({
     title: "",
