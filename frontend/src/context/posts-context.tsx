@@ -70,7 +70,6 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
       try {
         const response = await axios.get("http://localhost:5000");
         setFeaturedPosts(response.data.data);
-        console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -87,12 +86,23 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
 
     try {
       const response = await axios.post("http://localhost:5000/signup", user);
-      setIsLogged(response.data.success);
-      console.log(response.data);
+      const data = response.data;
+
+      if (data.success) {
+        localStorage.setItem("token", data.token);
+      }
     } catch (error) {
       console.error("Error signing up", error);
     }
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      setIsLogged(true);
+    }
+  }, []);
 
   const ctxValue = {
     allPosts,
