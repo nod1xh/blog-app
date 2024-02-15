@@ -36,4 +36,28 @@ router.post("/signup", async (req, res) => {
   }
 });
 
+router.post("/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      throw Error("Please provide a username and a password");
+    }
+
+    const user = await User.findOne({ username });
+    const matchPass = await bcrypt.compare(password, user.password);
+    if (!user || !matchPass) {
+      throw Error("Invalid username or password");
+    }
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    });
+
+    res.status(201).json({ success: true, message: "Login successful", token });
+  } catch (error) {
+    console.error("Error logging in:", error.message);
+    res.status(401).json({ success: false, error: error.message });
+  }
+});
+
 module.exports = router;

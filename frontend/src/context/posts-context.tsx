@@ -31,7 +31,8 @@ interface ContextType {
   setUser: Dispatch<SetStateAction<User>>;
   user: User;
   isLogged: boolean;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  handleSignUp: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  handleLogout: () => void;
 }
 
 export const PostsContext = createContext<ContextType>({
@@ -41,7 +42,8 @@ export const PostsContext = createContext<ContextType>({
   setAllPosts: () => {},
   setUser: () => {},
   isLogged: false,
-  handleSubmit: async () => {},
+  handleSignUp: async () => {},
+  handleLogout: () => {},
 });
 
 const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
@@ -79,7 +81,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     fetchFeaturedPosts();
   }, []);
 
-  async function handleSubmit(
+  async function handleSignUp(
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> {
     e.preventDefault();
@@ -91,6 +93,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
       if (data.success) {
         localStorage.setItem("token", data.token);
       }
+      setIsLogged(true);
     } catch (error) {
       console.error("Error signing up", error);
     }
@@ -104,6 +107,16 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     }
   }, []);
 
+  function handleLogout() {
+    setIsLogged(false);
+    localStorage.removeItem("token");
+    setUser({
+      username: "",
+      email: "",
+      password: "",
+    });
+  }
+
   const ctxValue = {
     allPosts,
     setAllPosts,
@@ -111,7 +124,8 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     user,
     setUser,
     isLogged,
-    handleSubmit,
+    handleSignUp,
+    handleLogout,
   };
 
   return (

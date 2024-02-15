@@ -21,10 +21,24 @@ a:hover,
   background-color: antiquewhite;
 }
 
+.signin {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-size: small;
+  text-decoration: underline;
+  margin-left: 5px;
+}
+
+.signin:hover {
+  background-color: white;
+  color: blue;
+}
+
 input {
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 10px;
+  padding: 5px;
   width: 100%;
 }
 
@@ -32,16 +46,19 @@ input:focus {
   outline: none;
 }
 
+input:focus::placeholder {
+  color: transparent;
+}
+
 label {
   margin-top: 15px;
   display: block;
-  font-weight: 600;
 }
 
 form {
   font-family: "Courier New", Courier, monospace;
   border: 1px solid #64748b;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 10px;
 }
 

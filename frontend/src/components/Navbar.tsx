@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { PostsContext } from "../context/posts-context";
 
 export default function Navbar() {
-  const { isLogged } = useContext(PostsContext);
+  const { isLogged, handleLogout } = useContext(PostsContext);
 
   return (
     <header>
@@ -22,7 +22,9 @@ export default function Navbar() {
             <NavLink to="/">Home</NavLink>
             <NavLink to="/createpost">Create Post</NavLink>
             {isLogged ? (
-              <button className="btn">Log out</button>
+              <button className="btn" onClick={handleLogout}>
+                Log out
+              </button>
             ) : (
               <NavLink to="signup">Sign Up</NavLink>
             )}

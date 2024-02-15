@@ -7,6 +7,7 @@ import CreatePost from "./pages/CreatePost";
 import SignUp from "./pages/SignUp";
 import Post from "./pages/FeaturedPost";
 import UserPost from "./pages/UserCreatedPost";
+import LogIn from "./pages/LogIn";
 
 const router = createBrowserRouter([
   {
@@ -21,9 +22,10 @@ const router = createBrowserRouter([
       },
       { path: "allposts", element: <AllPosts /> },
       { path: "createpost", element: <CreatePost /> },
-      { path: "signup", element: <SignUp /> },
       { path: "/:postId", element: <Post /> },
       { path: "allPosts/:postId", element: <UserPost /> },
+      { path: "signup", element: <SignUp /> },
+      { path: "login", element: <LogIn /> },
     ],
   },
 ]);

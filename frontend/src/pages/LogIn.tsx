@@ -1,9 +1,9 @@
-import { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { PostsContext } from "../context/posts-context";
 import { NavLink, useNavigate } from "react-router-dom";
 import Redirect from "../components/Redirect";
 
-export default function SignUp() {
+export default function LogIn() {
   const { user, setUser, handleSignUp, isLogged } = useContext(PostsContext);
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ export default function SignUp() {
     <>
       <Redirect
         content="Welcome to the blog! To browse all the latest posts, 
-        you will be redirected to the 'All Posts' page. Enjoy exploring! "
+      you will be redirected to the 'All Posts' page. Enjoy exploring! "
       />
     </>
   ) : (
@@ -55,15 +55,7 @@ export default function SignUp() {
             className="mb-3"
             required
           />
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={user.email}
-            onChange={handleChange}
-            placeholder="Email*"
-            className="mb-3"
-          />
+
           <input
             type="password"
             id="password"
