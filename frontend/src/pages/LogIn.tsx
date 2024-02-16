@@ -4,14 +4,15 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Redirect from "../components/Redirect";
 
 export default function LogIn() {
-  const { user, setUser, handleSignUp, isLogged } = useContext(PostsContext);
+  const { userLogin, setUserLogin, handleLogIn, isLogged } =
+    useContext(PostsContext);
   const navigate = useNavigate();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
 
-    setUser({
-      ...user,
+    setUserLogin({
+      ...userLogin,
       [name]: value,
     });
   }
@@ -20,7 +21,6 @@ export default function LogIn() {
     if (isLogged) {
       setTimeout(() => {
         navigate("/allposts");
-        console.log("Redirecting to all posts");
       }, 6000);
     }
   }, [isLogged, navigate]);
@@ -28,8 +28,8 @@ export default function LogIn() {
   return isLogged ? (
     <>
       <Redirect
-        content="Welcome to the blog! To browse all the latest posts, 
-      you will be redirected to the 'All Posts' page. Enjoy exploring! "
+        content={`Welcome back ${userLogin.username}! 
+        Dive into the latest blog posts! We've missed your curious mind.`}
       />
     </>
   ) : (
@@ -40,16 +40,14 @@ export default function LogIn() {
           method="post"
           className="w-3/4 font-courier p-5"
           encType="multipart/form-data"
-          onSubmit={handleSignUp}
+          onSubmit={handleLogIn}
         >
-          <h1 className="text-center text-3xl font-bold mb-10">
-            Create your account
-          </h1>
+          <h1 className="text-center text-3xl font-bold mb-10">Sign In</h1>
           <input
             type="text"
             id="username"
             name="username"
-            value={user.username}
+            value={userLogin.username}
             onChange={handleChange}
             placeholder="Username*"
             className="mb-3"
@@ -60,20 +58,20 @@ export default function LogIn() {
             type="password"
             id="password"
             name="password"
-            value={user.password}
+            value={userLogin.password}
             onChange={handleChange}
             placeholder="Password*"
           />
           <div className="flex justify-center">
             <button className="p-2 mt-10 rounded-md bg-slate-500 hover:bg-[#3498db] text-white w-full font-bold ">
-              Sign Up
+              Sign In
             </button>
           </div>
         </form>
         <p className="font-thin text-sm inline mt-4">
-          Already have an account?
-          <NavLink className="signin" to="/login">
-            Sign In
+          Don't have an account?
+          <NavLink className="signin" to="/signup">
+            Sign Up
           </NavLink>
         </p>
       </div>

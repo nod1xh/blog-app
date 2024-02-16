@@ -20,7 +20,6 @@ export default function SignUp() {
     if (isLogged) {
       setTimeout(() => {
         navigate("/allposts");
-        console.log("Redirecting to all posts");
       }, 6000);
     }
   }, [isLogged, navigate]);
@@ -28,8 +27,8 @@ export default function SignUp() {
   return isLogged ? (
     <>
       <Redirect
-        content="Welcome to the blog! To browse all the latest posts, 
-        you will be redirected to the 'All Posts' page. Enjoy exploring! "
+        content={`Welcome to the blog ${user.username}! To browse all the latest posts, 
+        you will be redirected to the 'All Posts' page. Enjoy exploring! `}
       />
     </>
   ) : (

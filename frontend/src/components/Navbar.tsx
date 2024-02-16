@@ -23,7 +23,7 @@ export default function Navbar() {
             <NavLink to="/createpost">Create Post</NavLink>
             {isLogged ? (
               <button className="btn" onClick={handleLogout}>
-                Log out
+                Sign out
               </button>
             ) : (
               <NavLink to="signup">Sign Up</NavLink>

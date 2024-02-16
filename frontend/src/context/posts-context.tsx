@@ -24,14 +24,22 @@ interface User {
   password: string;
 }
 
+interface UserLogin {
+  username: string;
+  password: string;
+}
+
 interface ContextType {
   allPosts: PostData[];
   featuredPosts: PostData[];
   setAllPosts: Dispatch<SetStateAction<PostData[]>>;
   setUser: Dispatch<SetStateAction<User>>;
+  setUserLogin: Dispatch<SetStateAction<UserLogin>>;
   user: User;
+  userLogin: UserLogin;
   isLogged: boolean;
   handleSignUp: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  handleLogIn: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   handleLogout: () => void;
 }
 
@@ -39,11 +47,14 @@ export const PostsContext = createContext<ContextType>({
   allPosts: [],
   featuredPosts: [],
   user: { username: "", email: "", password: "" },
+  userLogin: { username: "", password: "" },
   setAllPosts: () => {},
   setUser: () => {},
+  setUserLogin: () => {},
   isLogged: false,
   handleSignUp: async () => {},
   handleLogout: () => {},
+  handleLogIn: async () => {},
 });
 
 const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
@@ -54,6 +65,10 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
   const [user, setUser] = useState<User>({
     username: "",
     email: "",
+    password: "",
+  });
+  const [userLogin, setUserLogin] = useState<UserLogin>({
+    username: "",
     password: "",
   });
   const [isLogged, setIsLogged] = useState(false);
@@ -107,6 +122,26 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     }
   }, []);
 
+  async function handleLogIn(
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/login",
+        userLogin
+      );
+      const data = response.data;
+
+      if (data.success) {
+        setIsLogged(true);
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
+  }
+
   function handleLogout() {
     setIsLogged(false);
     localStorage.removeItem("token");
@@ -123,9 +158,12 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     featuredPosts,
     user,
     setUser,
+    userLogin,
+    setUserLogin,
     isLogged,
     handleSignUp,
     handleLogout,
+    handleLogIn,
   };
 
   return (
