@@ -78,6 +78,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
       try {
         const response = await axios.get("http://localhost:5000/allposts");
         setAllPosts(response.data.data);
+        console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching all posts", error);
       }
@@ -114,14 +115,6 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     }
   }
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      setIsLogged(true);
-    }
-  }, []);
-
   async function handleLogIn(
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> {
@@ -135,12 +128,21 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
       const data = response.data;
 
       if (data.success) {
+        localStorage.setItem("token", data.token);
         setIsLogged(true);
       }
     } catch (error) {
       console.error("Error logging in:", error);
     }
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      setIsLogged(true);
+    }
+  }, []);
 
   function handleLogout() {
     setIsLogged(false);

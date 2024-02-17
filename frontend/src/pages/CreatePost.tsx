@@ -11,8 +11,7 @@ export default function CreatePost() {
     title: "",
     image: null as File | null,
     content: "",
-    author: "",
-    date: "",
+    date: new Date().toISOString().slice(0, 10),
   });
   const navigate = useNavigate();
 
@@ -36,6 +35,10 @@ export default function CreatePost() {
     }
   }
 
+  function getToken() {
+    return localStorage.getItem("token");
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -43,13 +46,18 @@ export default function CreatePost() {
     formDataToSend.append("title", formData.title);
     formDataToSend.append("image", formData.image as File);
     formDataToSend.append("content", formData.content);
-    formDataToSend.append("author", formData.author);
     formDataToSend.append("date", formData.date);
 
     try {
+      const token = getToken();
       const response = await axios.post(
         "http://localhost:5000/allposts",
-        formDataToSend
+        formDataToSend,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
       );
       setAllPosts((prevPosts) => [...prevPosts, response.data.data]);
       setPostCreated(true);
@@ -116,28 +124,6 @@ export default function CreatePost() {
             onChange={handleChange}
             required
           ></textarea>
-        </div>
-        <div>
-          <label htmlFor="author">Author</label>
-          <input
-            type="text"
-            id="author"
-            name="author"
-            value={formData.author}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="date">Date</label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
-            required
-          />
         </div>
         <button className="p-3 mt-4 rounded-md bg-slate-500 hover:bg-[#3498db] text-white font-bold">
           Create Post

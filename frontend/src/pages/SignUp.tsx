@@ -48,7 +48,6 @@ export default function SignUp() {
             type="text"
             id="username"
             name="username"
-            value={user.username}
             onChange={handleChange}
             placeholder="Username*"
             className="mb-3"
@@ -58,7 +57,6 @@ export default function SignUp() {
             type="email"
             id="email"
             name="email"
-            value={user.email}
             onChange={handleChange}
             placeholder="Email*"
             className="mb-3"
@@ -67,7 +65,6 @@ export default function SignUp() {
             type="password"
             id="password"
             name="password"
-            value={user.password}
             onChange={handleChange}
             placeholder="Password*"
           />

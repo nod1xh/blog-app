@@ -21,7 +21,7 @@ export default function LogIn() {
     if (isLogged) {
       setTimeout(() => {
         navigate("/allposts");
-      }, 6000);
+      }, 4000);
     }
   }, [isLogged, navigate]);
 
@@ -47,7 +47,6 @@ export default function LogIn() {
             type="text"
             id="username"
             name="username"
-            value={userLogin.username}
             onChange={handleChange}
             placeholder="Username*"
             className="mb-3"
@@ -58,7 +57,6 @@ export default function LogIn() {
             type="password"
             id="password"
             name="password"
-            value={userLogin.password}
             onChange={handleChange}
             placeholder="Password*"
           />

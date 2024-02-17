@@ -20,7 +20,7 @@ export default function Navbar() {
           <ul className="flex">
             <NavLink to="/allposts">All Posts</NavLink>
             <NavLink to="/">Home</NavLink>
-            <NavLink to="/createpost">Create Post</NavLink>
+            {isLogged && <NavLink to="/createpost">Create Post</NavLink>}
             {isLogged ? (
               <button className="btn" onClick={handleLogout}>
                 Sign out

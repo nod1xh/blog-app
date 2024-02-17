@@ -21,7 +21,7 @@ export default function AllPosts() {
               />
             </div>
             <h1 className="font-medium">{post.title}</h1>
-            <p>Author: {post.author}</p>
+            <p>Author: {post.author} </p>
             <p>Date: {post.date}</p>
             <div className="flex items-center mt-2 ">
               <NavLink
