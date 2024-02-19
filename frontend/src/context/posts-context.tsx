@@ -16,6 +16,7 @@ interface PostData {
     contentType?: string;
   };
   date: string;
+  userId: string;
 }
 
 interface User {
@@ -41,6 +42,7 @@ interface ContextType {
   handleSignUp: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   handleLogIn: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   handleLogout: () => void;
+  getToken: () => string;
 }
 
 export const PostsContext = createContext<ContextType>({
@@ -55,6 +57,7 @@ export const PostsContext = createContext<ContextType>({
   handleSignUp: async () => {},
   handleLogout: () => {},
   handleLogIn: async () => {},
+  getToken: () => localStorage.getItem("token")!,
 });
 
 const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
@@ -126,6 +129,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
         userLogin
       );
       const data = response.data;
+      console.log(userLogin);
 
       if (data.success) {
         localStorage.setItem("token", data.token);
@@ -154,6 +158,10 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     });
   }
 
+  function getToken() {
+    return localStorage.getItem("token")!;
+  }
+
   const ctxValue = {
     allPosts,
     setAllPosts,
@@ -166,6 +174,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     handleSignUp,
     handleLogout,
     handleLogIn,
+    getToken,
   };
 
   return (

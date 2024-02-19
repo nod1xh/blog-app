@@ -19,6 +19,7 @@ const postSchema = new mongoose.Schema(
       required: [true, "Please add an author"],
     },
     date: String,
+    userId: String,
   },
 
   { collection: "posts" }

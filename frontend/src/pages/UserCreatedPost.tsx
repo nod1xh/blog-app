@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { PostsContext } from "../context/posts-context";
 import Modal from "../components/Modal";
 
@@ -17,12 +17,13 @@ interface Post {
   content: string;
   author: string;
   date: string;
+  userId: string;
 }
 
 export default function UserPost() {
   const { postId } = useParams<PostParams>();
   const navigate = useNavigate();
-  const { setAllPosts } = useContext(PostsContext);
+  const { setAllPosts, getToken } = useContext(PostsContext);
 
   const [selectedPost, setSelectedPost] = useState<Post>();
   const [isDeleted, setIsDeleted] = useState<Boolean>(false);
@@ -63,14 +64,25 @@ export default function UserPost() {
 
   async function deletePost(id: string) {
     try {
+      const token = getToken();
       const response = await axios.delete(
-        `http://localhost:5000/allPosts/${postId}`
+        `http://localhost:5000/allPosts/${postId}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
       );
       setAllPosts((prevPosts) => prevPosts.filter((post) => post._id !== id));
       setIsDeleted(true);
       console.log(response.data, "Post successfully deleted");
     } catch (error) {
-      console.error("Error deleting the post:", error);
+      const err = error as AxiosError;
+      if (err.response && err.response.status === 403) {
+        console.error("You are not authorized to delete this post");
+      } else {
+        console.error("Error deleting the poost:", error);
+      }
     }
   }
 

@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const data = require("./data/posts");
 const port = process.env.PORT || 5000;
 const connectDB = require("./config/db");
 connectDB();

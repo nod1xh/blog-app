@@ -5,7 +5,7 @@ import { PostsContext } from "../context/posts-context";
 import Redirect from "../components/Redirect";
 
 export default function CreatePost() {
-  const { setAllPosts } = useContext(PostsContext);
+  const { setAllPosts, getToken } = useContext(PostsContext);
   const [postCreated, setPostCreated] = useState<Boolean>(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -33,10 +33,6 @@ export default function CreatePost() {
         image: e.target.files[0],
       });
     }
-  }
-
-  function getToken() {
-    return localStorage.getItem("token");
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
