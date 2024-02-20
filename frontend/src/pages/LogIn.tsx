@@ -50,7 +50,6 @@ export default function LogIn() {
             onChange={handleChange}
             placeholder="Username*"
             className="mb-3"
-            required
           />
 
           <input

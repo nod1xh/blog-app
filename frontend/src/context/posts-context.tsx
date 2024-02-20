@@ -145,7 +145,8 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
         setIsLogged(true);
       }
     } catch (error) {
-      console.error("Error logging in:", error);
+      const err = error as AxiosError<{ message: string }>;
+      console.error(err.response?.data.message);
     }
   }
 

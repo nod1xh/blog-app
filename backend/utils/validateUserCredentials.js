@@ -12,6 +12,8 @@ function validateUserCredentials(username, password) {
       message: "Password must be at least 6 characters long.",
     };
   }
+
+  return { success: true };
 }
 
 module.exports = validateUserCredentials;
