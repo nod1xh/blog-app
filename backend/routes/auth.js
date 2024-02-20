@@ -3,17 +3,29 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const userAuth = require("../utils/userAuth");
+const validateUserCredentials = require("../utils/validateUserCredentials");
 
 router.post("/signup", async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    const userEmail = await User.findOne({ email });
+    const userUsername = await User.findOne({ username });
+
     if (!username || !email || !password) {
-      throw Error("Please fill all fields");
+      return res
+        .status(400)
+        .json({ success: false, message: "Please fill all fields." });
     }
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      throw Error("Email already registered");
+    const validation = validateUserCredentials(username, password);
+    if (!validation.success) {
+      return res.status(401).json(validation);
+    }
+
+    const authResult = userAuth(userEmail, userUsername);
+    if (!authResult.success) {
+      return res.status(401).json(authResult);
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -23,7 +35,7 @@ router.post("/signup", async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       token,
       data: {
@@ -32,7 +44,7 @@ router.post("/signup", async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, error: "Registration failed" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 });
 

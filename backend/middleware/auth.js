@@ -37,7 +37,7 @@ async function authDelete(req, res, next) {
     if (!token) {
       return res
         .status(401)
-        .json({ message: "Authorization token is missing" });
+        .json({ message: "You are not authorized to delete this post" });
     }
 
     const userId = getUserId(token);

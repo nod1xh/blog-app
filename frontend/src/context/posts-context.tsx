@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {
   Dispatch,
   SetStateAction,
@@ -114,7 +114,16 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
       }
       setIsLogged(true);
     } catch (error) {
-      console.error("Error signing up", error);
+      const err = error as AxiosError<{ message: string }>;
+      const errMsg = err.response!.data.message;
+
+      if (err.response && err.response.status === 400) {
+        console.error(errMsg);
+      } else if (err.response && err.response.status === 401) {
+        console.error(errMsg);
+      } else if (err.response && err.response.status === 500) {
+        console.error(errMsg);
+      }
     }
   }
 

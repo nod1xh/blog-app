@@ -51,7 +51,6 @@ export default function SignUp() {
             onChange={handleChange}
             placeholder="Username*"
             className="mb-3"
-            required
           />
           <input
             type="email"
