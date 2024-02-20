@@ -5,7 +5,7 @@ const Modal: React.FC<{
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   editedPost: { title: string; content: string };
-  editPost: () => {};
+  editPost: (e: ChangeEvent<HTMLFormElement>) => void;
   closeModal: () => void;
 }> = ({ handleChange, editedPost, editPost, closeModal }) => {
   const styles =
@@ -14,7 +14,11 @@ const Modal: React.FC<{
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <form action="" className="font-sans p-5 border-none">
+        <form
+          action=""
+          className="font-sans p-5 border-none"
+          onSubmit={editPost}
+        >
           <h1 className="text-center text-3xl font-bold mb-5">Update Post</h1>
           <label htmlFor="title">Title</label>
           <input
@@ -36,7 +40,7 @@ const Modal: React.FC<{
             required
           ></textarea>
           <div className="flex justify-center">
-            <button onClick={editPost} className={`${styles} mr-10`}>
+            <button type="submit" className={`${styles} mr-10`}>
               Update
             </button>
             <button onClick={closeModal} className={styles}>

@@ -99,23 +99,30 @@ router.post(
 );
 
 // Edit post
-router.put("/allposts/:id", async (req, res) => {
+router.put("/allposts/:id", auth.authDelete, async (req, res) => {
+  const postId = req.params.id;
+  const userId = req.userId;
+  console.log(userId, postId);
   try {
-    const updatedPost = await Post.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: {
-          title: req.body.title,
-          content: req.body.content,
-        },
-      },
-      {
-        new: true,
-      }
-    );
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found!" });
+    }
+
+    if (post.userId !== userId) {
+      return res.status(403).json({
+        message: "Unauthorized: You do not have permission to update this post",
+      });
+    }
+    post.title = req.body.title;
+    post.content = req.body.content;
+
+    const updatedPost = await post.save();
+
     res.json({ success: true, data: updatedPost });
   } catch (error) {
-    console.log(error);
+    console.error("Error updating post:", error);
     res.status(500).json({
       success: false,
       error: "Something went wrong while updating the post",
@@ -131,7 +138,7 @@ router.delete("/allposts/:id", auth.authDelete, async (req, res) => {
     const post = await Post.findById(postId);
 
     if (!post) {
-      return res.status(404).json({ message: "Post not found" });
+      return res.status(404).json({ message: "Post not found!" });
     }
 
     if (post.userId !== userId) {

@@ -75,13 +75,13 @@ export default function UserPost() {
       );
       setAllPosts((prevPosts) => prevPosts.filter((post) => post._id !== id));
       setIsDeleted(true);
-      console.log(response.data, "Post successfully deleted");
+      console.log(response, "Post successfully deleted");
     } catch (error) {
-      const err = error as AxiosError;
+      const err = error as AxiosError<{ message: string }>;
       if (err.response && err.response.status === 403) {
-        console.error("You are not authorized to delete this post");
+        console.error(err.response.data.message);
       } else {
-        console.error("Error deleting the poost:", error);
+        console.error(err.response!.data.message);
       }
     }
   }
@@ -103,21 +103,30 @@ export default function UserPost() {
     redirectToAllPosts();
   }, [isDeleted]);
 
-  async function editPost() {
+  function openModal() {
+    setIsEditing((prevIsEditing) => !prevIsEditing);
+  }
+
+  async function editPost(e: React.ChangeEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const token = getToken();
     try {
       const response = await axios.put(
         `http://localhost:5000/allposts/${postId}`,
-        editedPost
+        editedPost,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
       );
-
       console.log(response.data.data);
+      setEditedPost(response.data.data);
+      openModal();
     } catch (error) {
-      console.error("Something went wrong while editing the post:", error);
+      const err = error as AxiosError<{ message: string }>;
+      console.log(err.response?.data.message);
     }
-  }
-
-  function openModal() {
-    setIsEditing((prevIsEditing) => !prevIsEditing);
   }
 
   return isDeleted ? (
