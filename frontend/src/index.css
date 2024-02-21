@@ -28,11 +28,11 @@ a:hover,
   font-size: small;
   text-decoration: underline;
   margin-left: 5px;
+  color: blue;
 }
 
 .signin:hover {
   background-color: white;
-  color: blue;
 }
 
 input {
@@ -104,4 +104,38 @@ form {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 2.5rem;
+}
+
+small {
+  color: #ca0b00;
+  font-weight: bold;
+}
+
+.popupError {
+  border-radius: 5px;
+  padding: 20px;
+  width: fit-content;
+  color: #db1111;
+  background-color: #f0f0f0;
+  text-transform: uppercase;
+  position: fixed;
+  font-weight: bold;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease, bottom 0.3s ease; /* Add transitions */
+  animation: slideAndFade 0.3s ease forwards; /* Add animation */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow */
+}
+
+@keyframes slideAndFade {
+  from {
+    bottom: -100px; /* Start position below the viewport */
+    opacity: 0;
+  }
+  to {
+    bottom: 20px; /* Final position slightly above the bottom */
+    opacity: 1;
+  }
 }

@@ -50,7 +50,6 @@ router.get("/allposts/:id", async (req, res) => {
     const post = await Post.findById(req.params.id);
     res.json({ success: true, data: post });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ success: false, error: "Something went wrong" });
   }
 });
@@ -63,7 +62,6 @@ router.get("/:id", (req, res) => {
     });
     res.json({ success: true, data: post });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ success: false, error: "Something went wrong" });
   }
 });
@@ -92,7 +90,6 @@ router.post(
       const savedPost = await post.save();
       res.json({ success: true, data: savedPost });
     } catch (error) {
-      console.log(error);
       res.status(500).json({ success: false, error: "Something went wrong" });
     }
   }
@@ -112,7 +109,8 @@ router.put("/allposts/:id", auth.authDelete, async (req, res) => {
 
     if (post.userId !== userId) {
       return res.status(403).json({
-        message: "Unauthorized: You do not have permission to update this post",
+        message:
+          "You don't have permission to delete or edit posts created by other users.",
       });
     }
     post.title = req.body.title;
@@ -122,7 +120,6 @@ router.put("/allposts/:id", auth.authDelete, async (req, res) => {
 
     res.json({ success: true, data: updatedPost });
   } catch (error) {
-    console.error("Error updating post:", error);
     res.status(500).json({
       success: false,
       error: "Something went wrong while updating the post",
@@ -143,7 +140,8 @@ router.delete("/allposts/:id", auth.authDelete, async (req, res) => {
 
     if (post.userId !== userId) {
       return res.status(403).json({
-        message: "Unauthorized: You do not have permission to delete this post",
+        message:
+          "You don't have permission to delete or edit posts created by other users.",
       });
     }
 
@@ -155,7 +153,6 @@ router.delete("/allposts/:id", auth.authDelete, async (req, res) => {
     fs.unlinkSync(imagePath);
     res.json({ success: true, data: {} });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ success: false, error: "Something went wrong" });
   }
 });

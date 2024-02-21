@@ -43,7 +43,6 @@ router.post("/signup", async (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ success: false, message: "Something went wrong" });
   }
 });
@@ -59,11 +58,21 @@ router.post("/login", async (req, res) => {
     }
 
     const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found, please sign up.",
+        field: "username",
+      });
+    }
+
     const matchPass = await bcrypt.compare(password, user.password);
-    if (!user || !matchPass) {
-      return res
-        .status(401)
-        .json({ success: true, message: "Invalid username or password" });
+    if (!matchPass) {
+      return res.status(401).json({
+        success: true,
+        message: "Invalid password.",
+        field: "password",
+      });
     }
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
@@ -72,7 +81,6 @@ router.post("/login", async (req, res) => {
 
     res.status(201).json({ success: true, message: "Login successful", token });
   } catch (error) {
-    console.error("Error logging in:", error.message);
     res.status(401).json({ success: false, error: "Something went wrong" });
   }
 });

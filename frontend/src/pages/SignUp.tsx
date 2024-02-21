@@ -4,7 +4,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Redirect from "../components/Redirect";
 
 export default function SignUp() {
-  const { user, setUser, handleSignUp, isLogged } = useContext(PostsContext);
+  const { user, setUser, handleSignUp, isLogged, error } =
+    useContext(PostsContext);
   const navigate = useNavigate();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -33,7 +34,7 @@ export default function SignUp() {
     </>
   ) : (
     <div className="flex justify-center">
-      <div className="w-1/4 flex flex-col items-center mt-20">
+      <div className="w-2/4 flex flex-col items-center mt-20">
         <form
           action="submit"
           method="post"
@@ -44,31 +45,42 @@ export default function SignUp() {
           <h1 className="text-center text-3xl font-bold mb-10">
             Create your account
           </h1>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            onChange={handleChange}
-            placeholder="Username*"
-            className="mb-3"
-          />
-          <input
-            type="email"
-            id="email"
-            name="email"
-            onChange={handleChange}
-            placeholder="Email*"
-            className="mb-3"
-          />
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={handleChange}
-            placeholder="Password*"
-          />
+          <div className="mb-5">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              onChange={handleChange}
+              placeholder="Username*"
+              autoComplete="true"
+            />
+            {error.username && <small>{error.username}</small>}
+          </div>
+          <div className="mb-5">
+            <input
+              type="email"
+              id="email"
+              name="email"
+              onChange={handleChange}
+              placeholder="Email*"
+              autoComplete="true"
+            />
+            {error.email && <small>{error.email}</small>}
+          </div>
+          <div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              onChange={handleChange}
+              placeholder="Password*"
+              autoComplete="true"
+            />
+            {error.password && <small>{error.password}</small>}
+          </div>
+          {error && <small>{error.general}</small>}
           <div className="flex justify-center">
-            <button className="p-2 mt-10 rounded-md bg-slate-500 hover:bg-[#3498db] text-white w-full font-bold ">
+            <button className="p-2 mt-5 rounded-md bg-slate-500 hover:bg-[#3498db] text-white w-full font-bold ">
               Sign Up
             </button>
           </div>

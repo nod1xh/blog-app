@@ -23,7 +23,8 @@ interface Post {
 export default function UserPost() {
   const { postId } = useParams<PostParams>();
   const navigate = useNavigate();
-  const { setAllPosts, getToken } = useContext(PostsContext);
+  const { setAllPosts, getToken, isLogged, postError, setPostError } =
+    useContext(PostsContext);
 
   const [selectedPost, setSelectedPost] = useState<Post>();
   const [isDeleted, setIsDeleted] = useState<Boolean>(false);
@@ -78,11 +79,13 @@ export default function UserPost() {
       console.log(response, "Post successfully deleted");
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
-      if (err.response && err.response.status === 403) {
-        console.error(err.response.data.message);
-      } else {
-        console.error(err.response!.data.message);
+      if (err.response?.status === 403) {
+        setPostError(err.response.data.message);
       }
+
+      setTimeout(() => {
+        setPostError("");
+      }, 5000);
     }
   }
 
@@ -125,7 +128,12 @@ export default function UserPost() {
       openModal();
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
-      console.log(err.response?.data.message);
+      if (err.response?.status === 403) {
+        setPostError(err.response.data.message);
+      }
+      setTimeout(() => {
+        setPostError("");
+      }, 5000);
     }
   }
 
@@ -153,14 +161,16 @@ export default function UserPost() {
             <p className="leading-8">{selectedPost?.content}</p>
           </div>
           <div className="border-2 border-slate-500 w-full"></div>
-          <div className="flex justify-around w-full mt-3">
-            <button className="btn-1" onClick={openModal}>
-              Update Post
-            </button>
-            <button className="btn-1" onClick={handleDelete}>
-              Delete Post
-            </button>
-          </div>
+          {isLogged && (
+            <div className="flex justify-around w-full mt-3">
+              <button className="btn-1" onClick={openModal}>
+                Update Post
+              </button>
+              <button className="btn-1" onClick={handleDelete}>
+                Delete Post
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div>
@@ -173,6 +183,11 @@ export default function UserPost() {
           ></Modal>
         )}
       </div>
+      {postError && (
+        <div className="popupError">
+          <h1>{postError}</h1>
+        </div>
+      )}
     </>
   );
 }

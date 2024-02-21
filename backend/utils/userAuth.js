@@ -9,11 +9,13 @@ function userAuth(userEmail, userUsername) {
     return {
       success: false,
       message: "This email is already associated with an account.",
+      field: "email",
     };
   } else if (userUsername) {
     return {
       success: false,
       message: "This username is already associated with an account.",
+      field: "username",
     };
   }
 

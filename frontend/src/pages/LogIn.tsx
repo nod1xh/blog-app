@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Redirect from "../components/Redirect";
 
 export default function LogIn() {
-  const { userLogin, setUserLogin, handleLogIn, isLogged } =
+  const { userLogin, setUserLogin, handleLogIn, isLogged, error } =
     useContext(PostsContext);
   const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ export default function LogIn() {
     </>
   ) : (
     <div className="flex justify-center">
-      <div className="w-1/4 flex flex-col items-center mt-20">
+      <div className="w-2/4 flex flex-col items-center mt-20">
         <form
           action="submit"
           method="post"
@@ -43,22 +43,29 @@ export default function LogIn() {
           onSubmit={handleLogIn}
         >
           <h1 className="text-center text-3xl font-bold mb-10">Sign In</h1>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            onChange={handleChange}
-            placeholder="Username*"
-            className="mb-3"
-          />
-
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={handleChange}
-            placeholder="Password*"
-          />
+          <div className="mb-5">
+            <input
+              type="text"
+              id="username"
+              name="username"
+              onChange={handleChange}
+              placeholder="Username*"
+              autoComplete="true"
+            />
+            {error && <small>{error.username}</small>}
+          </div>
+          <div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              onChange={handleChange}
+              placeholder="Password*"
+              autoComplete="true"
+            />
+            {error && <small>{error.password}</small>}
+          </div>
+          {error && <small>{error.general}</small>}
           <div className="flex justify-center">
             <button className="p-2 mt-10 rounded-md bg-slate-500 hover:bg-[#3498db] text-white w-full font-bold ">
               Sign In

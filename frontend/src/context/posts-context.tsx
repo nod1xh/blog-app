@@ -30,15 +30,26 @@ interface UserLogin {
   password: string;
 }
 
+interface Errors {
+  username?: "string";
+  email?: "string";
+  password?: "string";
+  general?: string;
+}
+
 interface ContextType {
   allPosts: PostData[];
   featuredPosts: PostData[];
   setAllPosts: Dispatch<SetStateAction<PostData[]>>;
   setUser: Dispatch<SetStateAction<User>>;
   setUserLogin: Dispatch<SetStateAction<UserLogin>>;
+  setError: Dispatch<SetStateAction<Errors>>;
+  setPostError: Dispatch<SetStateAction<string>>;
   user: User;
   userLogin: UserLogin;
   isLogged: boolean;
+  error: Errors;
+  postError: string;
   handleSignUp: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   handleLogIn: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   handleLogout: () => void;
@@ -50,9 +61,13 @@ export const PostsContext = createContext<ContextType>({
   featuredPosts: [],
   user: { username: "", email: "", password: "" },
   userLogin: { username: "", password: "" },
+  error: {},
+  postError: "",
   setAllPosts: () => {},
   setUser: () => {},
   setUserLogin: () => {},
+  setError: () => {},
+  setPostError: () => {},
   isLogged: false,
   handleSignUp: async () => {},
   handleLogout: () => {},
@@ -75,6 +90,8 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     password: "",
   });
   const [isLogged, setIsLogged] = useState(false);
+  const [error, setError] = useState<Errors>({});
+  const [postError, setPostError] = useState("");
 
   useEffect(() => {
     async function fetchAllPosts() {
@@ -114,15 +131,23 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
       }
       setIsLogged(true);
     } catch (error) {
-      const err = error as AxiosError<{ message: string }>;
-      const errMsg = err.response!.data.message;
+      const err = error as AxiosError<{ message: string; field: string }>;
 
-      if (err.response && err.response.status === 400) {
-        console.error(errMsg);
-      } else if (err.response && err.response.status === 401) {
-        console.error(errMsg);
-      } else if (err.response && err.response.status === 500) {
-        console.error(errMsg);
+      if (err.response) {
+        const { message, field } = err.response.data;
+        if (field) {
+          setError((prev) => ({ ...prev, [field]: message }));
+        } else {
+          setError((prev) => ({ ...prev, general: message }));
+        }
+
+        setTimeout(() => {
+          if (field) {
+            setError((prev) => ({ ...prev, [field]: "" }));
+          } else {
+            setError((prev) => ({ ...prev, general: "" }));
+          }
+        }, 3000);
       }
     }
   }
@@ -145,8 +170,24 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
         setIsLogged(true);
       }
     } catch (error) {
-      const err = error as AxiosError<{ message: string }>;
-      console.error(err.response?.data.message);
+      const err = error as AxiosError<{ message: string; field: string }>;
+      if (err.response) {
+        const { message, field } = err.response.data;
+        if (field) {
+          setError((prev) => ({ ...prev, [field]: message }));
+        } else {
+          // If the error is not field-specific or field is not provided by the API
+          setError((prev) => ({ ...prev, general: message }));
+        }
+
+        setTimeout(() => {
+          if (field) {
+            setError((prev) => ({ ...prev, [field]: "" }));
+          } else {
+            setError((prev) => ({ ...prev, general: "" }));
+          }
+        }, 2000);
+      }
     }
   }
 
@@ -185,6 +226,10 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     handleLogout,
     handleLogIn,
     getToken,
+    setError,
+    error,
+    postError,
+    setPostError,
   };
 
   return (

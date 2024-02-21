@@ -1,4 +1,5 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useContext } from "react";
+import { PostsContext } from "../context/posts-context";
 
 const Modal: React.FC<{
   handleChange: (
@@ -7,9 +8,10 @@ const Modal: React.FC<{
   editedPost: { title: string; content: string };
   editPost: (e: ChangeEvent<HTMLFormElement>) => void;
   closeModal: () => void;
-}> = ({ handleChange, editedPost, editPost, closeModal }) => {
+}> = ({ handleChange, editPost, closeModal }) => {
   const styles =
     "p-3 mt-10 rounded-md bg-slate-500 hover:bg-[#3498db] w-2/4 font-bold text-white";
+  const { postError } = useContext(PostsContext);
 
   return (
     <div className="modal-overlay">
@@ -25,7 +27,6 @@ const Modal: React.FC<{
             type="text"
             id="title"
             name="title"
-            value={editedPost.title}
             onChange={handleChange}
             required
           />
@@ -33,7 +34,6 @@ const Modal: React.FC<{
           <textarea
             name="content"
             id="content"
-            value={editedPost.content}
             rows={8}
             onChange={handleChange}
             className="w-full border-2 focus:outline-none"
@@ -43,11 +43,16 @@ const Modal: React.FC<{
             <button type="submit" className={`${styles} mr-10`}>
               Update
             </button>
-            <button onClick={closeModal} className={styles}>
+            <button type="button" onClick={closeModal} className={styles}>
               Cancel
             </button>
           </div>
         </form>
+        {postError && (
+          <div className="popupError">
+            <h1>{postError}</h1>
+          </div>
+        )}
       </div>
     </div>
   );
