@@ -1,6 +1,5 @@
-// const eogaming = require("../assets/images/eogaming.jpg");
-// const gaccessories = require("../assets/images/gamingaccessories.jpg");
-// const pc = require("../assets/images/pc.jpg");
+const moment = require("moment");
+const currentDate = moment().format("DD-MM-YYYY");
 
 const data = [
   {
@@ -10,8 +9,8 @@ const data = [
       src: "pc.jpg",
     },
     content: "Content of blog post one..",
-    author: "Dino Hodzic",
-    date: new Date().toISOString().slice(0, 10), // Zamijeniti sa funkcijom koja generise novi datum kada se doda post.
+    author: "Jane Doe",
+    date: currentDate,
   },
   {
     _id: 2,
@@ -20,8 +19,8 @@ const data = [
       src: "eogaming.jpg",
     },
     content: "Content of blog post two..",
-    author: "Elmedin Hodzic",
-    date: new Date().toISOString().slice(0, 10), // Zamijeniti sa funkcijom koja generise novi datum kada se doda post.
+    author: "Anna Doe",
+    date: currentDate,
   },
   {
     _id: 3,
@@ -31,7 +30,7 @@ const data = [
     },
     content: "Content of blog post three..",
     author: "John Doe",
-    date: new Date().toISOString().slice(0, 10), // Zamijeniti sa funkcijom koja generise novi datum kada se doda post.
+    date: currentDate,
   },
 ];
 

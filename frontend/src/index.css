@@ -8,17 +8,44 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: #444444;
+}
+
+h2 {
+  color: #dfe7f5;
+}
+
+h1 {
+  font-weight: 500;
+  background: linear-gradient(to right, #4a90e2, #3f72af);
+  background-clip: text;
+  color: transparent;
+  padding: 0.5rem;
+  transition: transform 0.3s ease;
+  text-align: center;
+  border-bottom: 2px solid #333;
+  padding-bottom: 10px;
+  width: max-content;
+}
+
 a,
 .btn {
-  margin-right: 15px;
-  padding: 5px;
-  border: 1px solid #333;
-  border-radius: 5px;
+  margin-right: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4a5568;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 a:hover,
 .btn:hover {
-  background-color: antiquewhite;
+  color: #1f5dd1;
+}
+
+.active-link {
+  color: #1f5dd1;
 }
 
 .signin {
@@ -28,22 +55,22 @@ a:hover,
   font-size: small;
   text-decoration: underline;
   margin-left: 5px;
-  color: blue;
-}
-
-.signin:hover {
-  background-color: white;
+  color: rgb(98, 166, 255);
 }
 
 input {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px;
   width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #bebebe;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 input:focus {
   outline: none;
+  border-color: #99d7fc;
+  box-shadow: 0 0 5px #99d7fc;
 }
 
 input:focus::placeholder {
@@ -56,10 +83,45 @@ label {
 }
 
 form {
-  font-family: "Courier New", Courier, monospace;
-  border: 1px solid #64748b;
+  font-family: "Roboto";
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-btn {
+  background-color: #8d90a0;
+  color: #fff;
+  padding: 8px 20px;
+  border: none;
   border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.9s ease;
+  margin-top: 0.75rem;
+}
+
+.form-btn:hover {
+  background-color: #4d8bff;
+  transform: scale(1.05);
+}
+
+textarea {
+  width: 100%;
   padding: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  resize: vertical;
+}
+
+textarea:focus {
+  border-color: #99d7fc;
+  box-shadow: 0 0 5px #99d7fc;
+  outline: none;
 }
 
 .btn-1 {
@@ -109,6 +171,12 @@ form {
 small {
   color: #ca0b00;
   font-weight: bold;
+}
+
+img {
+  height: 18rem;
+  width: 100%;
+  border-radius: 5px;
 }
 
 .popupError {

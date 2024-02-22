@@ -42,9 +42,9 @@ export default function SignUp() {
           encType="multipart/form-data"
           onSubmit={handleSignUp}
         >
-          <h1 className="text-center text-3xl font-bold mb-10">
-            Create your account
-          </h1>
+          <div className="flex justify-center">
+            <h1 className="text-3xl font-bold mb-10">Create your account</h1>
+          </div>
           <div className="mb-5">
             <input
               type="text"
@@ -80,9 +80,7 @@ export default function SignUp() {
           </div>
           {error && <small>{error.general}</small>}
           <div className="flex justify-center">
-            <button className="p-2 mt-5 rounded-md bg-slate-500 hover:bg-[#3498db] text-white w-full font-bold ">
-              Sign Up
-            </button>
+            <button className="form-btn ">Sign Up</button>
           </div>
         </form>
         <p className="font-thin text-sm inline mt-4">

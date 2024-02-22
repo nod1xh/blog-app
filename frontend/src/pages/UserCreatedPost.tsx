@@ -55,7 +55,6 @@ export default function UserPost() {
           `http://localhost:5000/allPosts/${postId}`
         );
         setSelectedPost(response.data.data);
-        console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -76,7 +75,6 @@ export default function UserPost() {
       );
       setAllPosts((prevPosts) => prevPosts.filter((post) => post._id !== id));
       setIsDeleted(true);
-      console.log(response, "Post successfully deleted");
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
       if (err.response?.status === 403) {
@@ -97,7 +95,6 @@ export default function UserPost() {
     if (isDeleted) {
       setTimeout(() => {
         navigate("/allposts");
-        console.log("Go to All posts");
       }, 2000);
     }
   }
@@ -123,7 +120,7 @@ export default function UserPost() {
           },
         }
       );
-      console.log(response.data.data);
+
       setEditedPost(response.data.data);
       openModal();
     } catch (error) {

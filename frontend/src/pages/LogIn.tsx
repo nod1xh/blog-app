@@ -8,6 +8,14 @@ export default function LogIn() {
     useContext(PostsContext);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (isLogged) {
+      setTimeout(() => {
+        navigate("/allposts");
+      }, 4000);
+    }
+  }, [isLogged, navigate]);
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
 
@@ -16,14 +24,6 @@ export default function LogIn() {
       [name]: value,
     });
   }
-
-  useEffect(() => {
-    if (isLogged) {
-      setTimeout(() => {
-        navigate("/allposts");
-      }, 4000);
-    }
-  }, [isLogged, navigate]);
 
   return isLogged ? (
     <>
@@ -42,7 +42,9 @@ export default function LogIn() {
           encType="multipart/form-data"
           onSubmit={handleLogIn}
         >
-          <h1 className="text-center text-3xl font-bold mb-10">Sign In</h1>
+          <div className="flex justify-center">
+            <h1 className="text-3xl font-bold mb-10">Sign In</h1>
+          </div>
           <div className="mb-5">
             <input
               type="text"
@@ -67,9 +69,7 @@ export default function LogIn() {
           </div>
           {error && <small>{error.general}</small>}
           <div className="flex justify-center">
-            <button className="p-2 mt-10 rounded-md bg-slate-500 hover:bg-[#3498db] text-white w-full font-bold ">
-              Sign In
-            </button>
+            <button className="form-btn">Sign In</button>
           </div>
         </form>
         <p className="font-thin text-sm inline mt-4">

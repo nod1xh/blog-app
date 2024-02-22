@@ -84,7 +84,7 @@ export default function CreatePost() {
         method="post"
         encType="multipart/form-data"
         onSubmit={handleSubmit}
-        className="flex flex-col mt-10 w-2/4"
+        className="flex flex-col mt-10 w-7/12"
         aria-required
       >
         <div>
@@ -115,13 +115,12 @@ export default function CreatePost() {
             id="content"
             name="content"
             rows={10}
-            className="border-2 focus:outline-none w-full"
             value={formData.content}
             onChange={handleChange}
             required
           ></textarea>
         </div>
-        <button className="p-3 mt-4 rounded-md bg-slate-500 hover:bg-[#3498db] text-white font-bold">
+        <button className="form-btn w-2/4 relative left-1/4">
           Create Post
         </button>
       </form>

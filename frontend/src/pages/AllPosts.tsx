@@ -7,25 +7,29 @@ export default function AllPosts() {
 
   return allPosts.length > 0 ? (
     <>
-      <div className="font-semibold text-2xl text-center mt-10">
+      <div className="font-semibold text-3xl flex justify-center mt-10">
         <h1>All posts</h1>
       </div>
       <div className="allposts-container">
         {allPosts.map((post) => (
           <div className="mb-10 p-4" key={post._id}>
             <div className="flex justify-center">
-              <img
-                src={`http://localhost:5000/${post.image.src}`}
-                alt="img"
-                className="h-72 w-full"
-              />
+              <img src={`http://localhost:5000/${post.image.src}`} alt="img" />
             </div>
-            <h1 className="font-medium">{post.title}</h1>
-            <p>Author: {post.author} </p>
-            <p>Date: {post.date}</p>
+            <h2 className="font-medium">{post.title}</h2>
+            <div className="flex justify-between">
+              <p className="text-gray-100">
+                Author:
+                <span className="font-semibold"> {post.author}</span>
+              </p>
+              <p className="text-gray-100">
+                Date:
+                <span className="font-semibold"> {post.date}</span>
+              </p>
+            </div>
             <div className="flex items-center mt-2 ">
               <NavLink
-                className="hover:bg-transparent"
+                className="bg-blue-500 hover:bg-blue-700 hover:text-black text-white font-bold py-2 px-4 rounded inline-block transition duration-300"
                 to={`/allposts/${post._id}`}
               >
                 View Post

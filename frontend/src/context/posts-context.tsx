@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface PostData {
   _id: string | number;
@@ -93,12 +94,13 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
   const [error, setError] = useState<Errors>({});
   const [postError, setPostError] = useState("");
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     async function fetchAllPosts() {
       try {
         const response = await axios.get("http://localhost:5000/allposts");
         setAllPosts(response.data.data);
-        console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching all posts", error);
       }
@@ -115,6 +117,14 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
 
     fetchAllPosts();
     fetchFeaturedPosts();
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      setIsLogged(true);
+    }
   }, []);
 
   async function handleSignUp(
@@ -163,7 +173,6 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
         userLogin
       );
       const data = response.data;
-      console.log(userLogin);
 
       if (data.success) {
         localStorage.setItem("token", data.token);
@@ -191,14 +200,6 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     }
   }
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      setIsLogged(true);
-    }
-  }, []);
-
   function handleLogout() {
     setIsLogged(false);
     localStorage.removeItem("token");
@@ -207,6 +208,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
       email: "",
       password: "",
     });
+    navigate("/allposts");
   }
 
   function getToken() {

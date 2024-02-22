@@ -7,28 +7,33 @@ export default function HomePage() {
 
   return featuredPosts.length > 0 ? (
     <>
-      <div className="text-3xl text-center mt-10">
+      <div className="text-3xl flex justify-center mt-10">
         <h1>Featured posts</h1>
       </div>
-      <div className="flex justify-between items-center mt-10">
+      <div className="allposts-container">
         {featuredPosts.map((featuredPost) => (
-          <div
-            className="border-2 border-[#f1f5f9] rounded-lg p-2 mb-10 w-1/4"
-            key={featuredPost._id}
-          >
+          <div className="p-8 mb-10" key={featuredPost._id}>
             <div className="flex justify-center">
               <img
                 src={`http://localhost:5000/${featuredPost.image.src}`}
                 alt="img"
-                className="h-72"
+                loading="lazy"
               />
             </div>
-            <h1 className="font-medium">{featuredPost.title}</h1>
-            <p>Author: {featuredPost.author}</p>
-            <p>Date: {featuredPost.date}</p>
-            <div className="flex items-center mt-2 ">
+            <h2 className="font-medium">{featuredPost.title}</h2>
+            <div className="flex justify-between">
+              <p className="text-gray-100 text-sm">
+                Author:
+                <span className="font-semibold"> {featuredPost.author}</span>
+              </p>
+              <p className="text-gray-100 text-sm">
+                Date:
+                <span className="font-semibold"> {featuredPost.date}</span>
+              </p>
+            </div>
+            <div className="flex justify-center mt-2">
               <NavLink
-                className="hover:bg-transparent"
+                className="bg-blue-500 hover:bg-blue-600 hover:text-black text-white font-bold py-2 px-3 rounded inline-block transition duration-300"
                 to={`/${featuredPost._id}`}
               >
                 View Post
