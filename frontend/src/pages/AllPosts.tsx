@@ -41,7 +41,13 @@ export default function AllPosts() {
     </>
   ) : (
     <div className="text-3xl flex justify-center mt-10">
-      <h1>No posts to show</h1>
+      <h1>
+        Currently, there are no posts available. Would you like to create one?
+        -&gt;
+        <NavLink className="text-blue-500 text-2xl ml-4" to="/createpost">
+          CREATE
+        </NavLink>
+      </h1>
     </div>
   );
 }

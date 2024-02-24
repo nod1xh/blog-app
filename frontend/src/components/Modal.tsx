@@ -50,7 +50,7 @@ const Modal: React.FC<{
         </form>
         {postError && (
           <div className="popupError">
-            <h1>{postError}</h1>
+            <h3>{postError}</h3>
           </div>
         )}
       </div>

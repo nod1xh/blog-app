@@ -135,16 +135,21 @@ export default function UserPost() {
   }
 
   return isDeleted ? (
-    <h1 className="text-center font-semibold text-2xl mt-5">
-      Post has been deleted, redirecting to all posts.
-    </h1>
+    <div className="flex justify-center">
+      <h1 className="text-center font-semibold text-2xl mt-5">
+        Post has been deleted, redirecting to all posts.
+      </h1>
+    </div>
   ) : (
     <>
       <div className="mt-10 flex items-center justify-center">
         <div className="flex flex-col items-center w-2/4">
           <h1 className="text-3xl text-center">{selectedPost?.title}</h1>
-          <p className="mb-5 mt-3 font-semibold underline text-left">
-            by: {selectedPost?.author} on {selectedPost?.date}
+          <p className="mb-5 mt-3 font-semibold underline text-left text-white">
+            By: {selectedPost?.author}
+          </p>
+          <p className="mb-5 mt-3 font-semibold underline text-left text-white">
+            On: {selectedPost?.date}
           </p>
           <div className="m-5">
             <img
@@ -153,11 +158,11 @@ export default function UserPost() {
               className="w-full h-auto"
             />
           </div>
-          <div className="border-2 border-slate-500 w-full"></div>
+          <div className="border-b border-slate-500 w-full"></div>
           <div>
             <p className="leading-8">{selectedPost?.content}</p>
           </div>
-          <div className="border-2 border-slate-500 w-full"></div>
+          <div className="border-b border-slate-500 w-full"></div>
           {isLogged && (
             <div className="flex justify-around w-full mt-3">
               <button className="btn-1" onClick={openModal}>
@@ -182,7 +187,7 @@ export default function UserPost() {
       </div>
       {postError && (
         <div className="popupError">
-          <h1>{postError}</h1>
+          <h3>{postError}</h3>
         </div>
       )}
     </>
