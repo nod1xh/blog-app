@@ -46,11 +46,13 @@ interface ContextType {
   setUserLogin: Dispatch<SetStateAction<UserLogin>>;
   setError: Dispatch<SetStateAction<Errors>>;
   setPostError: Dispatch<SetStateAction<string>>;
+  setFetchError: Dispatch<SetStateAction<string>>;
   user: User;
   userLogin: UserLogin;
   isLogged: boolean;
   error: Errors;
   postError: string;
+  fetchError: string;
   handleSignUp: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   handleLogIn: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   handleLogout: () => void;
@@ -64,11 +66,13 @@ export const PostsContext = createContext<ContextType>({
   userLogin: { username: "", password: "" },
   error: {},
   postError: "",
+  fetchError: "",
   setAllPosts: () => {},
   setUser: () => {},
   setUserLogin: () => {},
   setError: () => {},
   setPostError: () => {},
+  setFetchError: () => {},
   isLogged: false,
   handleSignUp: async () => {},
   handleLogout: () => {},
@@ -93,6 +97,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
   const [isLogged, setIsLogged] = useState(false);
   const [error, setError] = useState<Errors>({});
   const [postError, setPostError] = useState("");
+  const [fetchError, setFetchError] = useState("");
 
   const navigate = useNavigate();
 
@@ -100,9 +105,11 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     async function fetchAllPosts() {
       try {
         const response = await axios.get("http://localhost:5000/allposts");
-        setAllPosts(response.data.data);
+        const createdPosts = response.data.data;
+        setAllPosts(createdPosts);
       } catch (error) {
-        console.error("Error fetching all posts", error);
+        const err = error as AxiosError<{ message: string }>;
+        setFetchError(err.response?.data.message!);
       }
     }
 
@@ -111,13 +118,14 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
         const response = await axios.get("http://localhost:5000");
         setFeaturedPosts(response.data.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        const err = error as AxiosError<{ message: string }>;
+        setFetchError(err.response?.data.message!);
       }
     }
 
-    fetchAllPosts();
     fetchFeaturedPosts();
-  }, []);
+    fetchAllPosts();
+  }, [allPosts]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -230,8 +238,10 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     getToken,
     setError,
     error,
+    fetchError,
     postError,
     setPostError,
+    setFetchError,
   };
 
   return (

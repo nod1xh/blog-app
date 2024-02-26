@@ -57,7 +57,6 @@ export default function CreatePost() {
       );
       setAllPosts((prevPosts) => [...prevPosts, response.data.data]);
       setPostCreated(true);
-      console.log(response.data.data, "Post successfully created!");
     } catch (error) {
       console.error("There has been an error creating a post:", error);
     }

@@ -34,6 +34,16 @@ export default function Post() {
     fetchData();
   }, []);
 
+  if (!selectedPost) {
+    return (
+      <div className="flex justify-center">
+        <h1 className="text-center font-semibold text-2xl mt-5 text-red-700">
+          Page not found.
+        </h1>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-10 flex items-center justify-center">
       <div className="flex flex-col items-center w-2/4">

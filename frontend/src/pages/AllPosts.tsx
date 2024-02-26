@@ -3,9 +3,13 @@ import { PostsContext } from "../context/posts-context";
 import { NavLink } from "react-router-dom";
 
 export default function AllPosts() {
-  const { allPosts } = useContext(PostsContext);
+  const { allPosts, fetchError } = useContext(PostsContext);
 
-  return allPosts.length > 0 ? (
+  return fetchError ? (
+    <div>
+      <h1>{fetchError}</h1>
+    </div>
+  ) : allPosts.length > 0 ? (
     <>
       <div className="font-semibold text-3xl flex justify-center mt-10">
         <h1>All posts</h1>

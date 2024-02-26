@@ -31,7 +31,11 @@ router.get("/allposts", async (req, res) => {
     }
     res.json({ success: true, data: posts });
   } catch (error) {
-    res.status(500).json({ success: false, error: "Something went wrong" });
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong, please try again later.",
+    });
   }
 });
 
@@ -40,7 +44,10 @@ router.get("/", (req, res) => {
   try {
     res.json({ success: true, data: featuredPosts });
   } catch (error) {
-    res.status(500).json({ success: false, error: "Something went wrong" });
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong, please try again later.",
+    });
   }
 });
 
@@ -48,9 +55,18 @@ router.get("/", (req, res) => {
 router.get("/allposts/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
+    if (!req.params.id) {
+      res.status(404).json({
+        success: false,
+        message: "Post not found",
+      });
+    }
     res.json({ success: true, data: post });
   } catch (error) {
-    res.status(500).json({ success: false, error: "Something went wrong" });
+    res.status(500).json({
+      success: false,
+      error: "Post not found",
+    });
   }
 });
 
@@ -62,7 +78,10 @@ router.get("/:id", (req, res) => {
     });
     res.json({ success: true, data: post });
   } catch (error) {
-    res.status(500).json({ success: false, error: "Something went wrong" });
+    res.status(500).json({
+      success: false,
+      error: "Something went wrong, please try again later.",
+    });
   }
 });
 
@@ -90,7 +109,10 @@ router.post(
       const savedPost = await post.save();
       res.json({ success: true, data: savedPost });
     } catch (error) {
-      res.status(500).json({ success: false, error: "Something went wrong" });
+      res.status(500).json({
+        success: false,
+        error: "Something went wrong, please try again later.",
+      });
     }
   }
 );
@@ -99,7 +121,6 @@ router.post(
 router.put("/allposts/:id", auth.authDelete, async (req, res) => {
   const postId = req.params.id;
   const userId = req.userId;
-  console.log(userId, postId);
   try {
     const post = await Post.findById(postId);
 

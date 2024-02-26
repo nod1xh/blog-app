@@ -56,7 +56,10 @@ export default function UserPost() {
         );
         setSelectedPost(response.data.data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        const err = error as AxiosError<{ message: string }>;
+        if (err.response?.status === 500) {
+          setPostError(err.response.data.message);
+        }
       }
     }
     fetchData();
@@ -77,10 +80,7 @@ export default function UserPost() {
       setIsDeleted(true);
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
-      if (err.response?.status === 403) {
-        setPostError(err.response.data.message);
-      }
-
+      console.error(err);
       setTimeout(() => {
         setPostError("");
       }, 5000);
@@ -120,8 +120,7 @@ export default function UserPost() {
           },
         }
       );
-
-      setEditedPost(response.data.data);
+      setSelectedPost(response.data.data);
       openModal();
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
@@ -132,6 +131,16 @@ export default function UserPost() {
         setPostError("");
       }, 5000);
     }
+  }
+
+  if (!selectedPost) {
+    return (
+      <div className="flex justify-center">
+        <h1 className="text-center font-semibold text-2xl mt-5 text-red-700">
+          Page not found.
+        </h1>
+      </div>
+    );
   }
 
   return isDeleted ? (

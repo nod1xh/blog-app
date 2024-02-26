@@ -22,10 +22,10 @@ const router = createBrowserRouter([
       },
       { path: "allposts", element: <AllPosts /> },
       { path: "createpost", element: <CreatePost /> },
-      { path: "/:postId", element: <Post /> },
       { path: "allPosts/:postId", element: <UserPost /> },
       { path: "signup", element: <SignUp /> },
       { path: "login", element: <LogIn /> },
+      { path: "/:postId", element: <Post /> },
     ],
   },
 ]);
