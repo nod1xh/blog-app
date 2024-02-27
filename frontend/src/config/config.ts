@@ -1,3 +1,3 @@
-const baseUrl = "https://blog-app-backend-aw0i.onrender.com";
+const baseUrl = "https://elegant-bat-suit.cyclic.app/";
 
 export default baseUrl;
