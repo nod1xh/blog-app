@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import baseUrl from "../config/config";
 
 type PostParams = {
   postId: string;
@@ -25,7 +26,7 @@ export default function Post() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`http://localhost:5000/${idPost}`);
+        const response = await axios.get(`${baseUrl}/${idPost}`);
         setSelectedPost(response.data.data[0]);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -52,10 +53,7 @@ export default function Post() {
           by: {selectedPost?.author} on {selectedPost?.date}
         </p>
         <div className=" h-1/4 ">
-          <img
-            src={`http://localhost:5000/${selectedPost?.image.src}`}
-            alt=""
-          />
+          <img src={`${baseUrl}/${selectedPost?.image.src}`} alt="" />
         </div>
         <div>
           <p className=" mt-5 leading-8">
