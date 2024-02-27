@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { PostsContext } from "../context/posts-context";
 import Modal from "../components/Modal";
+import baseUrl from "../config/config";
 
 type PostParams = {
   postId: string;
@@ -51,9 +52,7 @@ export default function UserPost() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/allPosts/${postId}`
-        );
+        const response = await axios.get(`${baseUrl}/allPosts/${postId}`);
         setSelectedPost(response.data.data);
       } catch (error) {
         const err = error as AxiosError<{ message: string }>;
@@ -68,14 +67,11 @@ export default function UserPost() {
   async function deletePost(id: string) {
     try {
       const token = getToken();
-      const response = await axios.delete(
-        `http://localhost:5000/allPosts/${postId}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await axios.delete(`${baseUrl}/allPosts/${postId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       console.log(response);
       setAllPosts((prevPosts) => prevPosts.filter((post) => post._id !== id));
       setIsDeleted(true);
@@ -115,7 +111,7 @@ export default function UserPost() {
     const token = getToken();
     try {
       const response = await axios.put(
-        `http://localhost:5000/allposts/${postId}`,
+        `${baseUrl}/allposts/${postId}`,
         editedPost,
         {
           headers: {

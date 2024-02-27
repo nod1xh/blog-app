@@ -15,7 +15,7 @@ export default function HomePage() {
           <div className="p-8 mb-10" key={featuredPost._id}>
             <div className="flex justify-center">
               <img
-                src={`http://localhost:5000/${featuredPost.image.src}`}
+                src={`https://blog-app-backend-aw0i.onrender.com/${featuredPost.image.src}`}
                 alt="img"
                 loading="lazy"
               />

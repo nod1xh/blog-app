@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PostsContext } from "../context/posts-context";
 import Redirect from "../components/Redirect";
+import baseUrl from "../config/config";
 
 export default function CreatePost() {
   const { setAllPosts, getToken } = useContext(PostsContext);
@@ -46,15 +47,11 @@ export default function CreatePost() {
 
     try {
       const token = getToken();
-      const response = await axios.post(
-        "http://localhost:5000/allposts",
-        formDataToSend,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await axios.post(`${baseUrl}/allposts`, formDataToSend, {
+        headers: {
+          Authorization: token,
+        },
+      });
       setAllPosts((prevPosts) => [...prevPosts, response.data.data]);
       setPostCreated(true);
     } catch (error) {

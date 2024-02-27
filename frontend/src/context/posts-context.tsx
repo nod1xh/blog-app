@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { useNavigate } from "react-router-dom";
+import baseUrl from "../config/config";
 
 interface PostData {
   _id: string | number;
@@ -98,13 +99,12 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
   const [error, setError] = useState<Errors>({});
   const [postError, setPostError] = useState("");
   const [fetchError, setFetchError] = useState("");
-
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchAllPosts() {
       try {
-        const response = await axios.get("http://localhost:5000/allposts");
+        const response = await axios.get(`${baseUrl}/allposts`);
         const createdPosts = response.data.data;
         setAllPosts(createdPosts);
       } catch (error) {
@@ -115,7 +115,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
 
     async function fetchFeaturedPosts() {
       try {
-        const response = await axios.get("http://localhost:5000");
+        const response = await axios.get(baseUrl);
         setFeaturedPosts(response.data.data);
       } catch (error) {
         const err = error as AxiosError<{ message: string }>;
@@ -141,7 +141,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/signup", user);
+      const response = await axios.post(`${baseUrl}/signup`, user);
       const data = response.data;
 
       if (data.success) {
@@ -176,10 +176,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/login",
-        userLogin
-      );
+      const response = await axios.post(`${baseUrl}/login`, userLogin);
       const data = response.data;
 
       if (data.success) {
