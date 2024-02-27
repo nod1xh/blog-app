@@ -1,3 +1,3 @@
-const baseUrl = "https://elegant-bat-suit.cyclic.app/";
+const baseUrl = "https://elegant-bat-suit.cyclic.app";
 
 export default baseUrl;
