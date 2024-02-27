@@ -76,11 +76,14 @@ export default function UserPost() {
           },
         }
       );
+      console.log(response);
       setAllPosts((prevPosts) => prevPosts.filter((post) => post._id !== id));
       setIsDeleted(true);
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
-      console.error(err);
+      if (err.response?.status === 403) {
+        setPostError(err.response.data.message);
+      }
       setTimeout(() => {
         setPostError("");
       }, 5000);
