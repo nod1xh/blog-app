@@ -17,6 +17,14 @@ app.use(
   })
 );
 
+app.options(
+  "*",
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
 // Exposing images folder for featured posts
 app.use(express.static("images"));
 app.use(express.static("uploads"));
