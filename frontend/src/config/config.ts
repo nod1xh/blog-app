@@ -1,3 +1,3 @@
-const baseUrl = "https://elegant-bat-suit.cyclic.app";
+const baseUrl = "http://localhost:5000";
 
 export default baseUrl;

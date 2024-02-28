@@ -52,9 +52,6 @@ export default function Post() {
         <p className="mb-5 mt-3 font-semibold underline text-left">
           by: {selectedPost?.author} on {selectedPost?.date}
         </p>
-        <div className=" h-1/4 ">
-          <img src={`${baseUrl}/${selectedPost?.image.src}`} alt="" />
-        </div>
         <div>
           <p className=" mt-5 leading-8">
             <span className="text-3xl">L</span>orem ipsum dolor sit, amet
