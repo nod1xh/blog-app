@@ -9,8 +9,7 @@ const Modal: React.FC<{
   editPost: (e: ChangeEvent<HTMLFormElement>) => void;
   closeModal: () => void;
   selectedPost: { title: string; content: string };
-  postEdited: Boolean;
-}> = ({ handleChange, editPost, closeModal, selectedPost, postEdited }) => {
+}> = ({ handleChange, editPost, closeModal, selectedPost }) => {
   const styles =
     "p-3 mt-10 rounded-md bg-slate-500 hover:bg-[#3498db] w-2/4 font-bold text-white";
   const { postError } = useContext(PostsContext);

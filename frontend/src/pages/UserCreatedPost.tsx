@@ -30,7 +30,7 @@ export default function UserPost() {
   const [selectedPost, setSelectedPost] = useState<Post>();
   const [isDeleted, setIsDeleted] = useState<Boolean>(false);
   const [isEditing, setIsEditing] = useState<Boolean>(false);
-  const [postEdited, setIsPostEdited] = useState<Boolean>(false);
+  const [postEdited, setPostEdited] = useState<Boolean>(false);
   const [editedPost, setEditedPost] = useState<{
     title: string;
     content: string;
@@ -125,6 +125,10 @@ export default function UserPost() {
         }
       );
       setSelectedPost(response.data.data);
+      setPostEdited(true);
+      setTimeout(() => {
+        setPostEdited(false);
+      }, 2000);
       openModal();
     } catch (error) {
       const err = error as AxiosError<{ message: string }>;
@@ -160,7 +164,6 @@ export default function UserPost() {
           <h1 className="text-3xl text-center mb-5 border-none">
             {selectedPost?.title}
           </h1>
-
           <div className="border-b border-slate-500 w-full"></div>
           <div>
             <p className="my-5 leading-8">{selectedPost?.content}</p>
@@ -186,21 +189,24 @@ export default function UserPost() {
           )}
         </div>
       </div>
-      <div>
-        {isEditing && (
-          <Modal
-            handleChange={handleChange}
-            editedPost={editedPost}
-            editPost={editPost}
-            closeModal={openModal}
-            selectedPost={selectedPost}
-            postEdited={postEdited}
-          ></Modal>
-        )}
-      </div>
+
+      {isEditing && (
+        <Modal
+          handleChange={handleChange}
+          editedPost={editedPost}
+          editPost={editPost}
+          closeModal={openModal}
+          selectedPost={selectedPost}
+        ></Modal>
+      )}
       {postError && (
         <div className="popupError">
           <h3>{postError}</h3>
+        </div>
+      )}
+      {postEdited && (
+        <div className="popupError">
+          <h3>Post has been successfully edited!</h3>
         </div>
       )}
     </>
