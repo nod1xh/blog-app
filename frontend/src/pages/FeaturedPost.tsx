@@ -48,12 +48,13 @@ export default function Post() {
   return (
     <div className="mt-10 flex items-center justify-center">
       <div className="flex flex-col items-center w-2/4">
-        <h1 className="text-3xl text-center">{selectedPost?.title}</h1>
-        <p className="mb-5 mt-3 font-semibold underline text-left">
-          by: {selectedPost?.author} on {selectedPost?.date}
-        </p>
+        <h1 className="text-3xl text-center border-none">
+          {selectedPost?.title}
+        </h1>
+
         <div>
-          <p className=" mt-5 leading-8">
+          <div className="border-b border-slate-500 w-full"></div>
+          <p className="my-5 leading-8">
             <span className="text-3xl">L</span>orem ipsum dolor sit, amet
             consectetur adipisicing elit. Architecto aspernatur minus assumenda
             nulla accusamus? Modi accusamus illum nemo, quos consequatur fugiat
@@ -79,6 +80,15 @@ export default function Post() {
             sapiente dolorem molestiae. Necessitatibus voluptatum nobis harum.
             Atque vero nihil vitae quos.
           </p>
+          <div className="border-b border-slate-500 w-full"></div>
+          <div className="flex justify-between w-full">
+            <p className="mb-5 mt-3 font-semibold text-white">
+              By: {selectedPost?.author}
+            </p>
+            <p className="mb-5 mt-3 font-semibold text-white">
+              Date: {selectedPost?.date}
+            </p>
+          </div>
         </div>
       </div>
     </div>

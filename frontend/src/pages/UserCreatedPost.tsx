@@ -30,6 +30,7 @@ export default function UserPost() {
   const [selectedPost, setSelectedPost] = useState<Post>();
   const [isDeleted, setIsDeleted] = useState<Boolean>(false);
   const [isEditing, setIsEditing] = useState<Boolean>(false);
+  const [postEdited, setIsPostEdited] = useState<Boolean>(false);
   const [editedPost, setEditedPost] = useState<{
     title: string;
     content: string;
@@ -41,11 +42,11 @@ export default function UserPost() {
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    const { name, value } = e.target;
+    const { name, value, defaultValue } = e.target;
 
     setEditedPost({
       ...editedPost,
-      [name]: value,
+      [name]: value || defaultValue,
     });
   }
 
@@ -107,6 +108,7 @@ export default function UserPost() {
 
   function openModal() {
     setIsEditing((prevIsEditing) => !prevIsEditing);
+    setEditedPost(selectedPost!);
   }
 
   async function editPost(e: React.ChangeEvent<HTMLFormElement>) {
@@ -114,7 +116,7 @@ export default function UserPost() {
     const token = getToken();
     try {
       const response = await axios.put(
-        `${baseUrl}/allposts/${postId}`,
+        `http://localhost:5000/allposts/${postId}`,
         editedPost,
         {
           headers: {
@@ -161,7 +163,7 @@ export default function UserPost() {
 
           <div className="border-b border-slate-500 w-full"></div>
           <div>
-            <p className="leading-8">{selectedPost?.content}</p>
+            <p className="my-5 leading-8">{selectedPost?.content}</p>
           </div>
           <div className="border-b border-slate-500 w-full"></div>
           <div className="flex justify-between w-full">
@@ -191,6 +193,8 @@ export default function UserPost() {
             editedPost={editedPost}
             editPost={editPost}
             closeModal={openModal}
+            selectedPost={selectedPost}
+            postEdited={postEdited}
           ></Modal>
         )}
       </div>

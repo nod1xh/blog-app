@@ -8,7 +8,9 @@ const Modal: React.FC<{
   editedPost: { title: string; content: string };
   editPost: (e: ChangeEvent<HTMLFormElement>) => void;
   closeModal: () => void;
-}> = ({ handleChange, editPost, closeModal }) => {
+  selectedPost: { title: string; content: string };
+  postEdited: Boolean;
+}> = ({ handleChange, editPost, closeModal, selectedPost, postEdited }) => {
   const styles =
     "p-3 mt-10 rounded-md bg-slate-500 hover:bg-[#3498db] w-2/4 font-bold text-white";
   const { postError } = useContext(PostsContext);
@@ -32,6 +34,7 @@ const Modal: React.FC<{
             id="title"
             name="title"
             onChange={handleChange}
+            defaultValue={selectedPost.title}
             required
           />
           <label htmlFor="content">Content</label>
@@ -41,6 +44,7 @@ const Modal: React.FC<{
             rows={8}
             onChange={handleChange}
             className="w-full border-2 focus:outline-none"
+            defaultValue={selectedPost.content}
             required
           ></textarea>
           <div className="flex justify-center">
