@@ -16,12 +16,15 @@ export default function AllPosts() {
       </div>
       <div className="allposts-container">
         {allPosts.map((post) => (
-          <div className="mb-10 p-4" key={post._id}>
-            <div className="flex justify-center">
-              <img src={`http://localhost:5000/${post.image.src}`} alt="img" />
-            </div>
-            <h2 className="font-medium">{post.title}</h2>
-            <div className="flex justify-between">
+          <NavLink
+            to={`/allposts/${post._id}`}
+            className="p-8 shadow-sm bg-slate-400 rounded-md mx-2 hover:bg-slate-500 flex flex-col items-center h-40 relative"
+            key={post._id}
+          >
+            <h2 className="font-medium text-white w-full text-center">
+              {post.title}
+            </h2>
+            <div className="absolute bottom-0 left-0 right-0 text-center m-2 flex justify-between">
               <p className="text-gray-100">
                 Author:
                 <span className="font-semibold"> {post.author}</span>
@@ -31,15 +34,7 @@ export default function AllPosts() {
                 <span className="font-semibold"> {post.date}</span>
               </p>
             </div>
-            <div className="flex items-center mt-2 ">
-              <NavLink
-                className="bg-blue-500 hover:bg-blue-700 hover:text-black text-white font-bold py-2 px-4 rounded inline-block transition duration-300"
-                to={`/allposts/${post._id}`}
-              >
-                View Post
-              </NavLink>
-            </div>
-          </div>
+          </NavLink>
         ))}
       </div>
     </>

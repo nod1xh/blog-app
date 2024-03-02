@@ -67,11 +67,14 @@ export default function UserPost() {
   async function deletePost(id: string) {
     try {
       const token = getToken();
-      const response = await axios.delete(`${baseUrl}/allPosts/${postId}`, {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const response = await axios.delete(
+        `http://localhost:5000/allPosts/${postId}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
       console.log(response);
       setAllPosts((prevPosts) => prevPosts.filter((post) => post._id !== id));
       setIsDeleted(true);
@@ -152,25 +155,23 @@ export default function UserPost() {
     <>
       <div className="mt-10 flex items-center justify-center">
         <div className="flex flex-col items-center w-2/4">
-          <h1 className="text-3xl text-center">{selectedPost?.title}</h1>
-          <p className="mb-5 mt-3 font-semibold underline text-left text-white">
-            By: {selectedPost?.author}
-          </p>
-          <p className="mb-5 mt-3 font-semibold underline text-left text-white">
-            On: {selectedPost?.date}
-          </p>
-          <div className="m-5">
-            <img
-              src={`http://localhost:5000/${selectedPost?.image.src}`}
-              alt="image"
-              className="w-full h-auto"
-            />
-          </div>
+          <h1 className="text-3xl text-center mb-5 border-none">
+            {selectedPost?.title}
+          </h1>
+
           <div className="border-b border-slate-500 w-full"></div>
           <div>
             <p className="leading-8">{selectedPost?.content}</p>
           </div>
           <div className="border-b border-slate-500 w-full"></div>
+          <div className="flex justify-between w-full">
+            <p className="mb-5 mt-3 font-semibold text-white">
+              By: {selectedPost?.author}
+            </p>
+            <p className="mb-5 mt-3 font-semibold text-white">
+              Date: {selectedPost?.date}
+            </p>
+          </div>
           {isLogged && (
             <div className="flex justify-around w-full mt-3">
               <button className="btn-1" onClick={openModal}>

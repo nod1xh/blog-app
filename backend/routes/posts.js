@@ -3,24 +3,9 @@ const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 const Post = require("../models/Post");
-const User = require("../models/User");
 const auth = require("../middleware/auth");
 const featuredPosts = require("../data/posts");
 const moment = require("moment");
-
-const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + "-" + file.originalname);
-  },
-});
-const upload = multer({
-  storage: storage,
-});
 
 // Get all posts
 router.get("/allposts", async (req, res) => {
@@ -86,36 +71,27 @@ router.get("/:id", (req, res) => {
 });
 
 // Add a post
-router.post(
-  "/allposts",
-  upload.single("image"),
-  auth.verifyToken,
-  async (req, res) => {
-    try {
-      const currentDate = moment().format("DD-MM-YYYY");
-      const username = req.username;
-      const userId = req.userId;
-      const post = new Post({
-        title: req.body.title,
-        content: req.body.content,
-        author: username,
-        image: {
-          src: req.file.filename,
-          contentType: req.file.mimetype,
-        },
-        date: currentDate,
-        userId: userId,
-      });
-      const savedPost = await post.save();
-      res.json({ success: true, data: savedPost });
-    } catch (error) {
-      res.status(500).json({
-        success: false,
-        error: "Something went wrong, please try again later.",
-      });
-    }
+router.post("/allposts", auth.verifyToken, async (req, res) => {
+  try {
+    const currentDate = moment().format("DD-MM-YYYY");
+    const username = req.username;
+    const userId = req.userId;
+    const post = new Post({
+      title: req.body.title,
+      content: req.body.content,
+      author: username,
+      date: currentDate,
+      userId: userId,
+    });
+    const savedPost = await post.save();
+    res.json({ success: true, data: savedPost });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: "Something went wrong, please try again later.",
+    });
   }
-);
+});
 
 // Edit post
 router.put("/allposts/:id", auth.authDelete, async (req, res) => {
@@ -170,8 +146,6 @@ router.delete("/allposts/:id", auth.authDelete, async (req, res) => {
 
     console.log(userId, post.userId);
 
-    const imagePath = path.join(__dirname, "../uploads", post.image.src);
-    fs.unlinkSync(imagePath);
     res.json({ success: true, data: {} });
   } catch (error) {
     res.status(500).json({ success: false, error: "Something went wrong" });

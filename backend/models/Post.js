@@ -6,10 +6,6 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please add a title"],
     },
-    image: {
-      src: String,
-      contentType: String,
-    },
     content: {
       type: String,
       required: [true, "Please add content"],

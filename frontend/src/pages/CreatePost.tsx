@@ -10,7 +10,6 @@ export default function CreatePost() {
   const [postCreated, setPostCreated] = useState<Boolean>(false);
   const [formData, setFormData] = useState({
     title: "",
-    image: null as File | null,
     content: "",
     date: new Date().toISOString().slice(0, 10),
   });
@@ -26,33 +25,17 @@ export default function CreatePost() {
     });
   }
 
-  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.target.files && e.target.files.length > 0) {
-      // If user choose the file or not
-      setFormData({
-        ...formData,
-        image: e.target.files[0],
-      });
-    }
-  }
-
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const formDataToSend = new FormData();
-    formDataToSend.append("title", formData.title);
-    formDataToSend.append("image", formData.image as File);
-    formDataToSend.append("content", formData.content);
-    formDataToSend.append("date", formData.date);
-
     try {
       const token = getToken();
-      const response = await axios.post(`${baseUrl}/allposts`, formDataToSend, {
+      const response = await axios.post(`${baseUrl}/allposts`, formData, {
         headers: {
           Authorization: token,
         },
       });
-      setAllPosts((prevPosts) => [...prevPosts, response.data.data]);
+      setAllPosts(response.data.data);
       setPostCreated(true);
     } catch (error) {
       console.error("There has been an error creating a post:", error);
@@ -91,17 +74,6 @@ export default function CreatePost() {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="image">Image</label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="image/*"
-            onChange={handleImageChange}
             required
           />
         </div>

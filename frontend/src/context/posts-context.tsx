@@ -13,10 +13,6 @@ interface PostData {
   _id: string | number;
   title: string;
   author: string;
-  image: {
-    src: string;
-    contentType?: string;
-  };
   date: string;
   userId: string;
 }
