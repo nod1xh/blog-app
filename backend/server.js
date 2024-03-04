@@ -16,20 +16,13 @@ app.use(
   })
 );
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173",
+//     credentials: true,
+//   })
+// );
 
-app.options(
-  "*",
-  cors({
-    origin: "https://blog-app-frontend-7som.onrender.com",
-    credentials: true,
-  })
-);
 app.options(
   "*",
   cors({
