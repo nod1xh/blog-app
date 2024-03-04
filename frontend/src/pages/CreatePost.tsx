@@ -54,7 +54,7 @@ export default function CreatePost() {
   return postCreated ? (
     <Redirect
       content="Congratulations on your new post! It's now live on the blog. 
-      We've redirected you to all posts to see your latest creation among others."
+      You are being redirected to all posts to see your latest creation among others."
     />
   ) : (
     <div className="flex flex-col items-center w-full">

@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import { PostsContext } from "../context/posts-context";
 import Modal from "../components/Modal";
 import baseUrl from "../config/config";
+import Prompt from "../components/Prompt";
 
 type PostParams = {
   postId: string;
@@ -28,9 +29,10 @@ export default function UserPost() {
     useContext(PostsContext);
 
   const [selectedPost, setSelectedPost] = useState<Post>();
-  const [isDeleted, setIsDeleted] = useState<Boolean>(false);
-  const [isEditing, setIsEditing] = useState<Boolean>(false);
-  const [postEdited, setPostEdited] = useState<Boolean>(false);
+  const [isDeleted, setIsDeleted] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [postEdited, setPostEdited] = useState(false);
+  const [promptDelete, setPromptDelete] = useState(false);
   const [editedPost, setEditedPost] = useState<{
     title: string;
     content: string;
@@ -68,14 +70,11 @@ export default function UserPost() {
   async function deletePost(id: string) {
     try {
       const token = getToken();
-      const response = await axios.delete(
-        `http://localhost:5000/allPosts/${postId}`,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const response = await axios.delete(`${baseUrl}/allPosts/${postId}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       console.log(response);
       setAllPosts((prevPosts) => prevPosts.filter((post) => post._id !== id));
       setIsDeleted(true);
@@ -116,7 +115,7 @@ export default function UserPost() {
     const token = getToken();
     try {
       const response = await axios.put(
-        `http://localhost:5000/allposts/${postId}`,
+        `${baseUrl}/allPosts/${postId}`,
         editedPost,
         {
           headers: {
@@ -139,6 +138,10 @@ export default function UserPost() {
         setPostError("");
       }, 5000);
     }
+  }
+
+  function promptUser() {
+    setPromptDelete((prevPromptDelete) => !prevPromptDelete);
   }
 
   if (!selectedPost) {
@@ -182,14 +185,13 @@ export default function UserPost() {
               <button className="btn-1" onClick={openModal}>
                 Update Post
               </button>
-              <button className="btn-1" onClick={handleDelete}>
+              <button className="btn-1" onClick={promptUser}>
                 Delete Post
               </button>
             </div>
           )}
         </div>
       </div>
-
       {isEditing && (
         <Modal
           handleChange={handleChange}
@@ -208,6 +210,9 @@ export default function UserPost() {
         <div className="popupError">
           <h3>Post has been successfully edited!</h3>
         </div>
+      )}
+      {promptDelete && (
+        <Prompt closeModal={promptUser} handleDelete={handleDelete}></Prompt>
       )}
     </>
   );
