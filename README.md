@@ -43,10 +43,11 @@ First download project <br/>
 Two folders in a project [one for frontend, one for backend]:
 
 - You need to create .env file in backend folder with these variables:
-PORT = 5000
-MONGO_URI = 'mongodb+srv://nod1x:elmedin123@cluster0.x4lukb8.mongodb.net/?retryWrites=true&w=majority'
-JWT_SECRET = ultra-secure-and-ultra-long-secret-jwt-key
-JWT_EXPIRES_IN = '1d'
+
+- PORT = 5000
+- MONGO_URI = 'mongodb+srv://nod1x:elmedin123@cluster0.x4lukb8.mongodb.net/?retryWrites=true&w=majority'
+- JWT_SECRET = ultra-secure-and-ultra-long-secret-jwt-key
+- JWT_EXPIRES_IN = '1d'
 
 - Comment out the code in frontend -> src -> config folder. 
 
