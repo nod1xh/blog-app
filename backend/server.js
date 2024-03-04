@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 // Cors middleware
 app.use(
   cors({
-    origin: "https://blog-app-1-ms9i.onrender.com/",
+    origin: "https://blog-app-1-ms9i.onrender.com",
     credentials: true,
   })
 );
@@ -26,7 +26,7 @@ app.use(
 app.options(
   "*",
   cors({
-    origin: "https://blog-app-1-ms9i.onrender.com/",
+    origin: "https://blog-app-1-ms9i.onrender.com",
     credentials: true,
   })
 );
