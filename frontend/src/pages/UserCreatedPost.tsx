@@ -208,7 +208,7 @@ export default function UserPost() {
       )}
       {postEdited && (
         <div className="popupError">
-          <h3>Post has been successfully edited!</h3>
+          <h3>Post has been successfully updated!</h3>
         </div>
       )}
       {promptDelete && (

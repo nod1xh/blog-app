@@ -18,7 +18,7 @@ export default function AllPosts() {
         {allPosts.map((post) => (
           <NavLink
             to={`/allposts/${post._id}`}
-            className="p-8 shadow-sm bg-slate-400 rounded-md mx-2 hover:bg-slate-500 flex flex-col items-center h-40 relative"
+            className="bg-gradient-to-t from-sky-300 via-sky-400 to-sky-600 hover:from-sky-800 hover:to-sky-950 p-8 shadow-sm rounded-md mx-2 flex flex-col items-center h-40 relative"
             key={post._id}
           >
             <h2 className="font-medium text-white w-full text-center">

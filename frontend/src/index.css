@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: #444444;
+  background-color: #ffffff;
 }
 
 h2 {
@@ -46,6 +46,7 @@ a:hover,
 
 .active-link {
   color: #1f5dd1;
+  text-decoration: underline;
 }
 
 .signin {
