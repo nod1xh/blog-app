@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { PostsContext } from "../context/posts-context";
 
+import Dropdown from "./Dropdown";
+
 export default function Navbar() {
   const { isLogged, handleLogout } = useContext(PostsContext);
   const { pathname } = useLocation();
@@ -49,6 +51,12 @@ export default function Navbar() {
                 Sign Up
               </NavLink>
             )}
+
+            {isLogged ? (
+              <div>
+                <Dropdown />
+              </div>
+            ) : null}
           </ul>
         </div>
       </nav>
