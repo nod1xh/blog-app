@@ -10,7 +10,7 @@ export default function Navbar() {
 
   return (
     <header>
-      <nav className="flex justify-between bg-white border-0 border-b border-solid border-b-slate-200 p-4 rounded-b-lg text-white shadow-md">
+      <nav className="flex justify-between bg-white border-0 border-b border-solid border-b-slate-200 px-4 py-6 rounded-b-lg text-white shadow-md">
         <div>
           <NavLink
             className="text-2xl font-bold border-none hover:bg-transparent "
@@ -51,14 +51,13 @@ export default function Navbar() {
                 Sign Up
               </NavLink>
             )}
-
-            {isLogged ? (
-              <div>
-                <Dropdown />
-              </div>
-            ) : null}
           </ul>
         </div>
+        {isLogged ? (
+          <div>
+            <Dropdown />
+          </div>
+        ) : null}
       </nav>
     </header>
   );
