@@ -9,19 +9,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Cors middleware
-// app.use(
-//   cors({
-//     origin: "https://blog-app-1-ms9i.onrender.com",
-//     credentials: true,
-//   })
-// );
-
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://blog-app-1-ms9i.onrender.com",
     credentials: true,
   })
 );
+
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173",
+//     credentials: true,
+//   })
+// );
 
 app.options(
   "*",
