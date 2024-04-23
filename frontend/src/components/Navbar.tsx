@@ -5,7 +5,7 @@ import { PostsContext } from "../context/posts-context";
 import Dropdown from "./Dropdown";
 
 export default function Navbar() {
-  const { isLogged, handleLogout } = useContext(PostsContext);
+  const { isLogged } = useContext(PostsContext);
   const { pathname } = useLocation();
 
   return (
@@ -39,11 +39,7 @@ export default function Navbar() {
                 Create Post
               </NavLink>
             )}
-            {isLogged ? (
-              <button className="btn" onClick={handleLogout}>
-                Sign out
-              </button>
-            ) : (
+            {!isLogged && (
               <NavLink
                 to="signup"
                 className={`${pathname === "/signup" && "active-link"}`}
