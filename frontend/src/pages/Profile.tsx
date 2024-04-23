@@ -1,8 +1,4 @@
-import { useContext } from "react";
-import { PostsContext } from "../context/posts-context";
-
 export default function Profile() {
-  const { user } = useContext(PostsContext);
   const username = localStorage.getItem("user");
 
   return (
