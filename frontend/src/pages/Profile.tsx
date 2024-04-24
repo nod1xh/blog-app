@@ -2,13 +2,13 @@ export default function Profile() {
   const username = localStorage.getItem("user");
 
   return (
-    <div>
-      <h2 className="font-bold text-2xl text-[#4a5568] mt-40 ml-20">
+    <div className="flex justify-center flex-col items-center">
+      <h2 className="font-bold text-2xl text-[#4a5568] mb-20 mt-10">
         Your Profile
       </h2>
-      <div>
+      <div className="w-1/3">
         <form
-          className="w-1/3 disabled:cursor-not-allowed focus-visible:outline-none bg-[#2f3f61] text-white"
+          className=" disabled:cursor-not-allowed focus-visible:outline-none bg-[#fcfeff]"
           action=""
         >
           <fieldset>
@@ -19,7 +19,7 @@ export default function Profile() {
                 id="username"
                 readOnly
                 value={username!}
-                className="bg-[#2f3f61] cursor-not-allowed"
+                className=" cursor-not-allowed"
                 aria-invalid={false}
               />
             </div>
@@ -29,7 +29,7 @@ export default function Profile() {
                 type="text"
                 id="email"
                 readOnly
-                className="cursor-not-allowed disabled:opacity-50 bg-[#2f3f61]"
+                className="cursor-not-allowed disabled:opacity-50"
                 aria-invalid={false}
               />
             </div>
