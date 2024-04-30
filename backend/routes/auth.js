@@ -49,11 +49,21 @@ router.post("/signup", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   try {
-    const { username, password } = req.body;
-    if (!username || !password) {
+    const { username, password, email } = req.body;
+    if (!username) {
       return res.status(401).json({
         success: true,
-        message: "Please provide username or password",
+        message: "Please provide username",
+      });
+    } else if (!password) {
+      return res.status(401).json({
+        success: true,
+        message: "Please provide password",
+      });
+    } else if (!email) {
+      return res.status(401).json({
+        success: true,
+        message: "Please provide an email associated with your account",
       });
     }
 

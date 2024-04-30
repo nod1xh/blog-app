@@ -1,5 +1,6 @@
 export default function Profile() {
   const username = localStorage.getItem("user");
+  const email = localStorage.getItem("email");
 
   return (
     <div className="flex justify-center flex-col items-center">
@@ -29,6 +30,7 @@ export default function Profile() {
                 type="text"
                 id="email"
                 readOnly
+                value={email!}
                 className="cursor-not-allowed disabled:opacity-50"
                 aria-invalid={false}
               />
