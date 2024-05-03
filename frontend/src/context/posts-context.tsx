@@ -24,7 +24,6 @@ interface User {
 }
 
 interface UserLogin {
-  email: string;
   username: string;
   password: string;
 }
@@ -61,7 +60,7 @@ export const PostsContext = createContext<ContextType>({
   allPosts: [],
   featuredPosts: [],
   user: { username: "", email: "", password: "" },
-  userLogin: { email: "", username: "", password: "" },
+  userLogin: { username: "", password: "" },
   error: {},
   postError: "",
   fetchError: "",
@@ -89,7 +88,6 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     password: "",
   });
   const [userLogin, setUserLogin] = useState<UserLogin>({
-    email: "",
     username: "",
     password: "",
   });

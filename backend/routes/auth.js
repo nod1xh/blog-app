@@ -54,16 +54,14 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({
         success: true,
         message: "Please provide username",
+        field: "username",
       });
-    } else if (!password) {
+    }
+    if (!password) {
       return res.status(401).json({
         success: true,
         message: "Please provide password",
-      });
-    } else if (!email) {
-      return res.status(401).json({
-        success: true,
-        message: "Please provide an email associated with your account",
+        field: "password",
       });
     }
 

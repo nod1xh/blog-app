@@ -25,7 +25,7 @@ export default function Profile() {
               />
             </div>
             <div>
-              <label htmlFor="email">Email</label>
+              <label htmlFor="bio">Bio</label>
               <input
                 type="text"
                 id="email"

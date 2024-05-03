@@ -12,7 +12,7 @@ export default function LogIn() {
     if (isLogged) {
       setTimeout(() => {
         navigate("/allposts");
-      }, 4000);
+      }, 2000);
     }
   }, [isLogged, navigate]);
 
@@ -25,7 +25,6 @@ export default function LogIn() {
     });
 
     localStorage.setItem("user", userLogin.username);
-    localStorage.setItem("email", userLogin.email);
   }
 
   return isLogged ? (
@@ -47,17 +46,6 @@ export default function LogIn() {
         >
           <div className="flex justify-center">
             <h1 className="text-3xl font-bold mb-10">Sign In</h1>
-          </div>
-          <div className="mb-5">
-            <input
-              type="text"
-              id="email"
-              name="email"
-              onChange={handleChange}
-              placeholder="Email*"
-              autoComplete="true"
-            />
-            {error && <small>{error.email}</small>}
           </div>
           <div className="mb-5">
             <input
