@@ -4,9 +4,7 @@ export default function Profile() {
 
   return (
     <div className="flex justify-center flex-col items-center">
-      <h2 className="font-bold text-2xl text-[#4a5568] mb-20 mt-10">
-        Your Profile
-      </h2>
+      <h2 className="font-bold text-2xl text-[#4a5568] mb-20 mt-10">Profile</h2>
       <div className="w-1/3">
         <form
           className=" disabled:cursor-not-allowed focus-visible:outline-none bg-[#fcfeff]"
@@ -20,18 +18,18 @@ export default function Profile() {
                 id="username"
                 readOnly
                 value={username!}
-                className=" cursor-not-allowed"
+                className=" cursor-not-allowed focus:border-[#bebebe] focus:shadow-none"
                 aria-invalid={false}
               />
             </div>
             <div>
-              <label htmlFor="bio">Bio</label>
+              <label htmlFor="email">Email</label>
               <input
                 type="text"
                 id="email"
                 readOnly
                 value={email!}
-                className="cursor-not-allowed disabled:opacity-50"
+                className="cursor-not-allowed disabled:opacity-50 focus:border-[#bebebe] focus:shadow-none"
                 aria-invalid={false}
               />
             </div>

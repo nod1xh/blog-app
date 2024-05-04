@@ -91,6 +91,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
     username: "",
     password: "",
   });
+
   const [isLogged, setIsLogged] = useState(false);
   const [error, setError] = useState<Errors>({});
   const [postError, setPostError] = useState("");
@@ -175,8 +176,12 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
       const response = await axios.post(`${baseUrl}/login`, userLogin);
       const data = response.data;
 
+      console.log(data);
+
       if (data.success) {
+        console.log(data);
         localStorage.setItem("token", data.token);
+        localStorage.setItem("email", data.email);
         setIsLogged(true);
       }
     } catch (error) {
