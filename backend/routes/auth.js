@@ -87,14 +87,12 @@ router.post("/login", async (req, res) => {
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
 
-    res
-      .status(201)
-      .json({
-        success: true,
-        message: "Login successful",
-        email: user.email,
-        token,
-      });
+    res.status(201).json({
+      success: true,
+      message: "Login successful",
+      email: user.email,
+      token,
+    });
   } catch (error) {
     res.status(401).json({ success: false, error: "Something went wrong" });
   }

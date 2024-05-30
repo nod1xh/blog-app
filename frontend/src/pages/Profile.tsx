@@ -33,6 +33,15 @@ export default function Profile() {
                 aria-invalid={false}
               />
             </div>
+            <div>
+              <label htmlFor="bio">Bio</label>
+              <textarea
+                className="disabled:opacity-50 focus:border-[#bebebe] focus:shadow-none mb-0"
+                name="bio"
+                id="bio"
+              ></textarea>
+              <button className="text-sm hover:text-blue-600">Add Bio</button>
+            </div>
           </fieldset>
         </form>
       </div>
