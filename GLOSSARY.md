@@ -159,3 +159,86 @@ This repo tracks 48 files. Without `.gitignore` it would track tens of thousands
 | `git checkout .` | **throw away all uncommitted changes** — the undo button |
 
 `git checkout .` is what makes experimenting safe: break something on purpose to see what it does, then restore it in one command.
+
+---
+
+## Running the app locally
+
+### npm install / node_modules / package.json
+
+`package.json` is the shopping list: the libraries this project needs.
+`npm install` reads that list and downloads them into a `node_modules`
+folder. That folder is huge and rebuildable, so it is git-ignored and never
+committed -- anyone who clones the repo runs `npm install` to recreate it.
+
+### Port
+
+A numbered door on a computer. One machine runs many programs, so each one
+listens on its own number. My backend uses 5000, my frontend uses 5173.
+Only one program can hold a port at a time -- if something is already using
+5173, the next one has to take 5174.
+
+### localhost
+
+"This computer." `http://localhost:5000` means "port 5000 on the machine I
+am sitting at." Nothing leaves the machine.
+
+### Dev server
+
+A program that runs the app while I am working on it and watches my files.
+Save a file and it updates automatically.
+
+- **nodemon** runs the backend and restarts it on every save
+- **vite** runs the frontend and refreshes the browser on every save
+
+Both are started with `npm run dev`, from inside the `backend` or `frontend`
+folder.
+
+### CORS
+
+A browser rule. By default a browser will not let a page from one address
+read data from a different address. So my backend has to say out loud which
+frontend it trusts, by sending a header naming it.
+
+**In my code:** [backend/server.js](backend/server.js) sets this from
+`CLIENT_URL`. If that value does not match the address the site is actually
+open on, requests arrive at the server fine but the browser refuses to hand
+the response to my code.
+
+---
+
+## React
+
+### Dependency array
+
+The list in square brackets at the end of a `useEffect`. It tells React when
+to run that code again.
+
+- `[]` -- run once, when the page first loads
+- `[something]` -- run again whenever `something` changes
+
+**In my code:** [frontend/src/context/posts-context.tsx](frontend/src/context/posts-context.tsx)
+used to say `[allPosts]` on the effect that *fetches* `allPosts`. Fetching
+changed it, which triggered another fetch, forever -- about 12,000 requests
+in a few seconds. Changing it to `[]` fixed it.
+
+### Reference equality
+
+React does not compare the contents of a list or object. It checks whether
+it is the **same one**. Two lists holding identical items are still two
+different lists, so React treats them as a change.
+
+This is why the loop above happened: every fetch built a brand new array,
+and "new array" means "changed" even when the posts inside were identical.
+
+The same idea in reverse: to make React notice an update, hand it a **new**
+list rather than modifying the old one. That is why CreatePost now does
+`setAllPosts(prev => [...prev, newPost])` -- the `...` copies the old items
+into a new array.
+
+### Bugs can hide other bugs
+
+CreatePost was replacing the whole post list with a single post. Nobody ever
+saw it, because the refetch loop overwrote the damage milliseconds later.
+Fixing the loop exposed it. Worth remembering: after fixing something, check
+what it was covering up.
