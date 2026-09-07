@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const port = process.env.PORT || 5000;
@@ -8,28 +10,14 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Cors middleware
-// app.use(
-//   cors({
-//     origin: "https://blog-app-1-ms9i.onrender.com",
-//     credentials: true,
-//   })
-// );
+// Which frontend is allowed to talk to this server.
+// Set CLIENT_URL in the .env file to change it.
+const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
+const corsOptions = { origin: clientUrl, credentials: true };
 
-app.options(
-  "*",
-  cors({
-    origin: "https://blog-app-1-ms9i.onrender.com",
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(express.static("images"));
 
