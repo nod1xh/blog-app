@@ -122,7 +122,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
 
     fetchFeaturedPosts();
     fetchAllPosts();
-  }, [allPosts]);
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");

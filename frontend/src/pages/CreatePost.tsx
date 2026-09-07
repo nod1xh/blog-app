@@ -35,7 +35,7 @@ export default function CreatePost() {
           Authorization: token,
         },
       });
-      setAllPosts(response.data.data);
+      setAllPosts((prevPosts) => [...prevPosts, response.data.data]);
       setPostCreated(true);
     } catch (error) {
       console.error("There has been an error creating a post:", error);
