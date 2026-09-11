@@ -29,6 +29,7 @@ export default function UserPost() {
     useContext(PostsContext);
 
   const [selectedPost, setSelectedPost] = useState<Post>();
+  const [isLoading, setIsLoading] = useState(true);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [postEdited, setPostEdited] = useState(false);
@@ -62,6 +63,8 @@ export default function UserPost() {
         if (err.response?.status === 500) {
           setPostError(err.response.data.message);
         }
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchData();
@@ -142,6 +145,16 @@ export default function UserPost() {
 
   function promptUser() {
     setPromptDelete((prevPromptDelete) => !prevPromptDelete);
+  }
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center">
+        <h1 className="text-center font-semibold text-2xl mt-5">
+          Loading post...
+        </h1>
+      </div>
+    );
   }
 
   if (!selectedPost) {

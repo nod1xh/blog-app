@@ -22,6 +22,7 @@ export default function Post() {
   const { postId } = useParams<PostParams>();
   const idPost = +postId!;
   const [selectedPost, setSelectedPost] = useState<Post>();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -30,10 +31,22 @@ export default function Post() {
         setSelectedPost(response.data.data[0]);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchData();
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center">
+        <h1 className="text-center font-semibold text-2xl mt-5">
+          Loading post...
+        </h1>
+      </div>
+    );
+  }
 
   if (!selectedPost) {
     return (
