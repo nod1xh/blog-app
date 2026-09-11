@@ -23,8 +23,6 @@ export default function LogIn() {
       ...userLogin,
       [name]: value,
     });
-
-    localStorage.setItem("user", userLogin.username);
   }
 
   return isLogged ? (

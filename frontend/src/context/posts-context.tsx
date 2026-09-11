@@ -143,6 +143,8 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
 
       if (data.success) {
         localStorage.setItem("token", data.token);
+        localStorage.setItem("user", data.data.user.username);
+        localStorage.setItem("email", data.data.user.email);
       }
       setIsLogged(true);
     } catch (error) {
@@ -176,11 +178,9 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
       const response = await axios.post(`${baseUrl}/login`, userLogin);
       const data = response.data;
 
-      console.log(data);
-
       if (data.success) {
-        console.log(data);
         localStorage.setItem("token", data.token);
+        localStorage.setItem("user", data.username);
         localStorage.setItem("email", data.email);
         setIsLogged(true);
       }

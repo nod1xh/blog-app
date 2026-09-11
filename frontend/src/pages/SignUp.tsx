@@ -15,9 +15,6 @@ export default function SignUp() {
       ...user,
       [name]: value,
     });
-
-    localStorage.setItem("user", user.username);
-    localStorage.setItem("email", user.email);
   }
 
   useEffect(() => {
