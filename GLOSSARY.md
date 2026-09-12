@@ -242,3 +242,89 @@ CreatePost was replacing the whole post list with a single post. Nobody ever
 saw it, because the refetch loop overwrote the damage milliseconds later.
 Fixing the loop exposed it. Worth remembering: after fixing something, check
 what it was covering up.
+
+---
+
+## Sprint 2 terms
+
+### State updates are not immediate
+
+When I call `setSomething(newValue)`, the variable does **not** change on the
+next line. React schedules the update and gives me the new value on the next
+run of the component.
+
+**In my code:** LogIn and SignUp used to save the username to localStorage
+inside the typing handler, right after calling `setUserLogin`. They read the
+value from *before* the keystroke, so the saved name was always one letter
+short.
+
+Rule of thumb: if I set something and then read it in the same function, I am
+reading the old value.
+
+### Loading state
+
+A page that fetches data has three situations, not two:
+
+- waiting for the answer
+- got an answer, it is empty
+- got an answer, here it is
+
+Empty-because-still-waiting and empty-because-nothing-exists look identical
+unless I track them separately. Both post pages used to assume the second,
+so every post flashed "Page not found." before appearing.
+
+### `finally`
+
+The part of a `try / catch` that runs **either way** -- success or failure.
+Good place to turn a loading flag off, because a failed request should stop
+loading too, not hang on "Loading..." forever.
+
+### Cleanup function
+
+Anything a `useEffect` returns is run when the component goes away. Used to
+undo whatever the effect started.
+
+**In my code:** four pages set a timer to navigate after a few seconds. With
+no cleanup, leaving the page early left the timer running and it navigated
+anyway. Each one now returns `() => clearTimeout(timer)`.
+
+The dropdown in Dropdown.tsx had this right from the start -- it removes its
+click listener on the way out.
+
+### errorElement / 404
+
+React Router shows `errorElement` when no route matches, or when a page
+throws. It was commented out, so an unknown address rendered a blank screen.
+NotFound.tsx handles it now.
+
+### The linter
+
+`npm run lint` reads the code and reports suspicious patterns without running
+anything. It found three real problems that had been sitting there, including
+one genuine bug: when the server is unreachable there is no response object at
+all, so the error message was `undefined` and the page said "there are no
+posts available" instead of reporting the failure.
+
+Worth running before committing. It is faster than finding these by hand.
+
+### Sorting by `_id`
+
+A MongoDB `_id` begins with a creation timestamp, so sorting by it gives
+creation order for free.
+
+**In my code:** the homepage uses `.sort({ _id: -1 }).limit(3)` for the newest
+posts. This is a workaround -- the `date` field is text like "21-04-2024", and
+sorted as text that puts December 2024 before January 2023. The proper fix is
+storing real dates, which is on the Sprint 4 list.
+
+### Bugs hiding behind other things
+
+Three times now, something broken did no visible damage because something else
+covered it:
+
+- the CreatePost bug was masked by the refetch loop overwriting it
+- `value || defaultValue` was masked by the `required` attribute
+- `success: true` on a failed login is masked by axios throwing on a 401
+
+None of them were reachable, and all three are still worth fixing -- the cover
+is accidental, and it disappears the moment the other piece changes.
