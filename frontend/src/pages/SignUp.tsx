@@ -18,11 +18,13 @@ export default function SignUp() {
   }
 
   useEffect(() => {
-    if (isLogged) {
-      setTimeout(() => {
-        navigate("/allposts");
-      }, 6000);
-    }
+    if (!isLogged) return;
+
+    const timer = setTimeout(() => {
+      navigate("/allposts");
+    }, 6000);
+
+    return () => clearTimeout(timer);
   }, [isLogged, navigate]);
 
   return isLogged ? (

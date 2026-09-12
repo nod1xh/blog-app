@@ -8,13 +8,14 @@ import SignUp from "./pages/SignUp";
 import UserPost from "./pages/UserCreatedPost";
 import LogIn from "./pages/LogIn";
 import Profile from "./pages/Profile";
+import NotFound from "./pages/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     id: "root",
-    // errorElement:
+    errorElement: <NotFound />,
     children: [
       {
         index: true,

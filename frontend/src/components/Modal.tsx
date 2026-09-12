@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect } from "react";
+import { ChangeEvent, useContext } from "react";
 import { PostsContext } from "../context/posts-context";
 
 const Modal: React.FC<{
@@ -13,10 +13,6 @@ const Modal: React.FC<{
   const styles =
     "p-3 mt-10 rounded-md bg-slate-500 hover:bg-[#3498db] w-2/4 font-bold text-white";
   const { postError } = useContext(PostsContext);
-
-  useEffect(() => {
-    editPost;
-  }, [editPost]);
 
   return (
     <div className="modal-overlay">

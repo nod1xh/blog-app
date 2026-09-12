@@ -10,9 +10,6 @@ const moment = require("moment");
 router.get("/allposts", async (req, res) => {
   try {
     const posts = await Post.find();
-    for (let i = 0; i < posts.length; i++) {
-      posts[i].id = posts[i]._id.toHexString();
-    }
     res.json({ success: true, data: posts });
   } catch (error) {
     console.error(error);

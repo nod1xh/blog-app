@@ -9,11 +9,13 @@ export default function LogIn() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLogged) {
-      setTimeout(() => {
-        navigate("/allposts");
-      }, 2000);
-    }
+    if (!isLogged) return;
+
+    const timer = setTimeout(() => {
+      navigate("/allposts");
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, [isLogged, navigate]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {

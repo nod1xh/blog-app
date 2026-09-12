@@ -106,7 +106,10 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
         setAllPosts(createdPosts);
       } catch (error) {
         const err = error as AxiosError<{ message: string }>;
-        setFetchError(err.response?.data.message!);
+        setFetchError(
+          err.response?.data?.message ??
+            "Could not reach the server. Please try again later."
+        );
       }
     }
 
@@ -116,7 +119,10 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
         setLatestPosts(response.data.data);
       } catch (error) {
         const err = error as AxiosError<{ message: string }>;
-        setFetchError(err.response?.data.message!);
+        setFetchError(
+          err.response?.data?.message ??
+            "Could not reach the server. Please try again later."
+        );
       }
     }
 

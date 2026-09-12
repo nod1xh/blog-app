@@ -19,8 +19,6 @@ const corsOptions = { origin: clientUrl, credentials: true };
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
-app.use(express.static("images"));
-
 const authRouter = require("./routes/auth");
 app.use("/", authRouter);
 

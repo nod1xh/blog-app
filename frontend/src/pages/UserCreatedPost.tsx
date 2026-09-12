@@ -45,16 +45,17 @@ export default function UserPost() {
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    const { name, value, defaultValue } = e.target;
+    const { name, value } = e.target;
 
     setEditedPost({
       ...editedPost,
-      [name]: value || defaultValue,
+      [name]: value,
     });
   }
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
       try {
         const response = await axios.get(`${baseUrl}/allPosts/${postId}`);
         setSelectedPost(response.data.data);
@@ -68,7 +69,7 @@ export default function UserPost() {
       }
     }
     fetchData();
-  }, []);
+  }, [postId, setPostError]);
 
   async function deletePost(id: string) {
     try {
@@ -96,17 +97,15 @@ export default function UserPost() {
     deletePost(postId!);
   }
 
-  function redirectToAllPosts() {
-    if (isDeleted) {
-      setTimeout(() => {
-        navigate("/allposts");
-      }, 2000);
-    }
-  }
-
   useEffect(() => {
-    redirectToAllPosts();
-  }, [isDeleted]);
+    if (!isDeleted) return;
+
+    const timer = setTimeout(() => {
+      navigate("/allposts");
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [isDeleted, navigate]);
 
   function openModal() {
     setIsEditing((prevIsEditing) => !prevIsEditing);

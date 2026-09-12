@@ -7,7 +7,7 @@ import baseUrl from "../config/config";
 
 export default function CreatePost() {
   const { setAllPosts, getToken } = useContext(PostsContext);
-  const [postCreated, setPostCreated] = useState<Boolean>(false);
+  const [postCreated, setPostCreated] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -43,12 +43,13 @@ export default function CreatePost() {
   }
 
   useEffect(() => {
-    if (postCreated) {
-      setTimeout(() => {
-        navigate("/allposts");
-        console.log("Go to All posts");
-      }, 5000);
-    }
+    if (!postCreated) return;
+
+    const timer = setTimeout(() => {
+      navigate("/allposts");
+    }, 5000);
+
+    return () => clearTimeout(timer);
   }, [postCreated, navigate]);
 
   return postCreated ? (
