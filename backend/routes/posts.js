@@ -4,7 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const Post = require("../models/Post");
 const auth = require("../middleware/auth");
-const featuredPosts = require("../data/posts");
 const moment = require("moment");
 
 // Get all posts
@@ -24,10 +23,13 @@ router.get("/allposts", async (req, res) => {
   }
 });
 
-// Get featured posts / homepage
-router.get("/", (req, res) => {
+// Get the newest posts for the homepage.
+// Sorted by _id because it starts with a creation timestamp -- the `date`
+// field is a DD-MM-YYYY string and cannot be sorted chronologically.
+router.get("/", async (req, res) => {
   try {
-    res.json({ success: true, data: featuredPosts });
+    const posts = await Post.find().sort({ _id: -1 }).limit(3);
+    res.json({ success: true, data: posts });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -51,21 +53,6 @@ router.get("/allposts/:id", async (req, res) => {
     res.status(500).json({
       success: false,
       error: "Post not found",
-    });
-  }
-});
-
-// Get a featured post by ID
-router.get("/:id", (req, res) => {
-  try {
-    const post = featuredPosts.filter((featuredPost) => {
-      return featuredPost._id === +req.params.id;
-    });
-    res.json({ success: true, data: post });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: "Something went wrong, please try again later.",
     });
   }
 });

@@ -37,7 +37,7 @@ interface Errors {
 
 interface ContextType {
   allPosts: PostData[];
-  featuredPosts: PostData[];
+  latestPosts: PostData[];
   setAllPosts: Dispatch<SetStateAction<PostData[]>>;
   setUser: Dispatch<SetStateAction<User>>;
   setUserLogin: Dispatch<SetStateAction<UserLogin>>;
@@ -58,7 +58,7 @@ interface ContextType {
 
 export const PostsContext = createContext<ContextType>({
   allPosts: [],
-  featuredPosts: [],
+  latestPosts: [],
   user: { username: "", email: "", password: "" },
   userLogin: { username: "", password: "" },
   error: {},
@@ -81,7 +81,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
   props
 ) => {
   const [allPosts, setAllPosts] = useState<PostData[]>([]);
-  const [featuredPosts, setFeaturedPosts] = useState<PostData[]>([]);
+  const [latestPosts, setLatestPosts] = useState<PostData[]>([]);
   const [user, setUser] = useState<User>({
     username: "",
     email: "",
@@ -110,17 +110,17 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
       }
     }
 
-    async function fetchFeaturedPosts() {
+    async function fetchLatestPosts() {
       try {
         const response = await axios.get(baseUrl);
-        setFeaturedPosts(response.data.data);
+        setLatestPosts(response.data.data);
       } catch (error) {
         const err = error as AxiosError<{ message: string }>;
         setFetchError(err.response?.data.message!);
       }
     }
 
-    fetchFeaturedPosts();
+    fetchLatestPosts();
     fetchAllPosts();
   }, []);
 
@@ -226,7 +226,7 @@ const PostsContextProvider: React.FC<{ children: React.ReactNode }> = (
   const ctxValue = {
     allPosts,
     setAllPosts,
-    featuredPosts,
+    latestPosts,
     user,
     setUser,
     userLogin,
