@@ -6,6 +6,7 @@ Sections headers will be used to reference location of destination.
 
 - [Description](#description)
 - [How To Use](#how-to-use)
+- [Project Notes](#project-notes)
 - [Live Demo](#live-demo)
 - [License](#license)
 - [Author Info](#author-info)
@@ -38,38 +39,90 @@ Sections headers will be used to reference location of destination.
 
 #### Installation
 
-First download project <br/>
+The project has two folders: `backend` and `frontend`. Each is set up and run
+separately.
 
-Two folders in a project [one for frontend, one for backend]:
+**1. Settings**
 
-Create a `.env` file inside the `backend` folder. Copy `backend/.env.example`
-and fill in your own values:
+Both halves read their settings from a `.env` file. Copy the templates and fill
+in your own values:
 
 ```bash
 cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
 ```
 
-Never commit the `.env` file — it is listed in `.gitignore` for that reason.
+`backend/.env` needs your MongoDB connection string and a JWT secret. Generate
+a secret with:
 
-Comment out the code in frontend -> src -> config folder. 
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
 
-Open two terminals:
-- cd frontend -> npm install to install client dependencies
-- cd backend -> npm install to install client dependencies
+The defaults in `frontend/.env` work as-is for local development.
 
-After installing dependencies:
-- cd frontend -> npm run dev to go into development mode
-- cd backend -> npm run dev to go into development mode
+Neither `.env` file is committed — both are listed in `.gitignore`. Never put a
+password in `frontend/.env`: anything there is sent to the browser and can be
+read by anyone using the site.
+
+**2. Install dependencies**
+
+```bash
+cd backend && npm install
+cd ../frontend && npm install
+```
+
+**3. Run**
+
+Open two terminals, one for each half:
+
+```bash
+cd backend && npm run dev     # http://localhost:5000
+cd frontend && npm run dev    # http://localhost:5173
+```
+
+Then open http://localhost:5173.
+
+Both ports are configurable. If you change them, update `PORT` and `CLIENT_URL`
+in `backend/.env` and `VITE_API_URL` in `frontend/.env` to match — the backend
+only accepts requests from the address in `CLIENT_URL`.
 
 #### Scripts
 
-`npm run dev` to run react server <br/>
-`npm run build` to make production build <br/>
+Frontend:
 
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | start the dev server with hot reload |
+| `npm run build` | type-check and build for production |
+| `npm run lint` | check for problems without running anything |
+| `npm run preview` | serve the production build locally |
+
+Backend:
+
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | start with nodemon, restarts on save |
+| `npm start` | start once, for production |
+
+
+## Project Notes
+
+Originally built in 2024 while learning web development, and being modernised
+since. [GLOSSARY.md](GLOSSARY.md) records the terminology as it comes up,
+pointed at the lines in this repository where each term applies.
+
+[Back To The Top](#BLOGAPP)
+
+---
 
 ## Live Demo
 
 - Website - [Blog App](https://blog-app-1-ms9i.onrender.com/)
+
+> **Currently offline.** The frontend is still served, but the deployed backend
+> cannot reach the database, so no posts load. Run it locally using the steps
+> above.
 
 [Back To The Top](#BLOGAPP)
 
