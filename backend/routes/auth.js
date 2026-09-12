@@ -52,14 +52,14 @@ router.post("/login", async (req, res) => {
     const { username, password, email } = req.body;
     if (!username) {
       return res.status(401).json({
-        success: true,
+        success: false,
         message: "Please provide username",
         field: "username",
       });
     }
     if (!password) {
       return res.status(401).json({
-        success: true,
+        success: false,
         message: "Please provide password",
         field: "password",
       });
@@ -77,7 +77,7 @@ router.post("/login", async (req, res) => {
     const matchPass = await bcrypt.compare(password, user.password);
     if (!matchPass) {
       return res.status(401).json({
-        success: true,
+        success: false,
         message: "Invalid password.",
         field: "password",
       });
